@@ -23,6 +23,9 @@ class Balance extends \Core\Model
 	private $incomesCategory;
 	private $expenses;
 	private $expensesCategory;
+	
+	public $incomesAmount;
+	public $expensesAmount;
 
 	
 	public function __construct()
@@ -40,6 +43,10 @@ class Balance extends \Core\Model
 		$this->incomes = Income::findByDateOrCategory($year,$month);
 		$this->expensesCategory = Expense::findByDateOrCategory($year,$month, true);
 		$this->expenses = Expense::findByDateOrCategory($year,$month);
+		
+		$this->incomesAmount=Income::incomesAmount($year, $month);
+		$this->expensesAmount=Expense::expensesAmount($year, $month);
+
 	}
 	
 	public function setBalanceByPeriodOfTime($date1, $date2){
@@ -50,7 +57,14 @@ class Balance extends \Core\Model
 			$this->incomes = Income::findByPeriodOfTimeOrCategory($date1, $date2);
 			$this->expensesCategory = Expense::findByPeriodOfTimeOrCategory($date1, $date2, true);
 			$this->expenses = Expense::findByPeriodOfTimeOrCategory($date1, $date2);
+			
+			$this->incomesAmount=Income::incomesAmountByPeriodOfTime($date1, $date2);
+			$this->expensesAmount=Expense::expensesAmountByPeriodOfTime($date1, $date2);
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public function getIncomes(){
@@ -67,6 +81,14 @@ class Balance extends \Core\Model
 	
 	public function getexpensesCategory(){
 		return $this->expensesCategory;
+	}
+	
+	public function getIncomesAmount(){
+		return $this->incomesAmount;
+	}
+	
+	public function getExpensesAmount(){
+		return $this->expensesAmount;
 	}
 	
 	public function validatePeriodOfTime($date1, $date2)
