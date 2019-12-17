@@ -4,13 +4,23 @@
 
 {% block body %}
 
-    <h1>Welcome</h1>
-
+    
     {% if current_user %}
-        Hello {{ current_user.name }}.
-
-    {% else %}
-        <a href="/signup/new">Sign up</a> or <a href="/login">log in</a>.
+      <h1> Welcome  {{ current_user.name }}.</h1>
     {% endif %}
-
+	
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7">
+					<h1 class="text-center">Witamy w aplikacji <strong style="letter-spacing: 3px;">FINANSE</strong></h1>
+					<p class="lead text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vulputate, ipsum sed imperdiet feugiat, metus magna imperdiet ex, id facilisis eros nibh eu massa. Maecenas elementum nunc nec tristique laoreet. Donec ornare, nisi et ultricies convallis, massa lacus consequat neque, sed iaculis nisi est pulvinar risus. Suspendisse sed laoreet felis. Pellentesque id fringilla augue. Etiam a vulputate justo. Quisque tempor congue dolor, non vehicula nunc lacinia in. Sed feugiat justo ullamcorper tellus porttitor mollis. Nullam pharetra sem metus, id fringilla nisi luctus vitae. Nunc consectetur lobortis purus. Sed maximus arcu sit amet pretium bibendum.</p>
+				</div>
+				<div class="col-md-5">
+					<img src="/img/menu.jpg" class="img-fluid align-middle mt-2">
+				</div>
+			</div>
+		</div>
+	</main>
+	
 {% endblock %}
