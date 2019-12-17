@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
-use \App\Models\User;
+use \App\Models\Expense;
 
 /**
  * AddIncome controller
@@ -23,4 +23,17 @@ class AddExpense extends \Core\Controller
         View::renderTemplate('AddExpense/new.html');
     }
 
+	/**
+     * Sign up a new user
+     *
+     * @return void
+     */
+    public function createAction()
+    {
+        $expense = new Expense($_POST);
+		
+        $expense->save();
+		 View::renderTemplate('AddExpense/new.html');
+    }
+	
 }
