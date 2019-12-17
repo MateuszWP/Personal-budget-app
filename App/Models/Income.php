@@ -138,5 +138,45 @@ class Income extends \Core\Model
 			return $stmt->fetchAll();
     }
 	
+	public static function incomesAmount($year, $month=''){
+		
+		if($month !=''){
+			$sql = 'SELECT SUM(amount) as sum FROM incomes WHERE userId = :userId && month(date) = :month && year(date) = :year';
+		}
+		else{
+			$sql = 'SELECT SUM(amount) as sum FROM incomes WHERE userId = :userId && year(date) = :year';
+		}
+		
+		$db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+        if($month !=='') $stmt->bindValue(':month', $month, PDO::PARAM_STR);
+        $stmt->bindValue(':year', $year, PDO::PARAM_STR);
+
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+		
+	}
 	
+	public static function incomesAmountByPeriodOfTime($date1, $date2)
+    { 
+			$sql = 'SELECT SUM(amount) as sum FROM incomes WHERE userId = :userId && date>= :date1 && date<= :date2' ;
+			
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':date1', $date1, PDO::PARAM_STR);
+			$stmt->bindValue(':date2', $date2, PDO::PARAM_STR);
+
+			$stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+    }
+
 }

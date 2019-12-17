@@ -36,35 +36,32 @@ class ShowBalance extends \Core\Controller
 			$this-> showBalance(4, date('Y'));
 		}
 		else if($_POST['periodOfTime'] == 5){
-			$option = 5;
-			View::renderTemplate('/Balance/balance.html', ['option' => $option]);
+			View::renderTemplate('/Balance/balance.html', ['option' => 5]);
 		}
 	}
 	
 	public function showBalance($option, $year, $month=''){
 		$balance = new Balance( );
 		$balance->setBalance($year, $month);
-
 		View::renderTemplate('/Balance/balance.html',
-			array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'option' => $option)
+			array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'saldoIncomes' => $balance->getIncomesAmount(), 'saldoExpenses' =>$balance->getExpensesAmount(), 'option' => $option)
 			);
 		
 	}
 	
 	public function showBalanceForPeriodOfTimeAction(){
-		//$this-> showBalance(3, date('Y'), date('m')-1);
-		if(isset($_POST['date1']) && isset($_POST['date1'])){
-			
-			$date1 = date('Y-m-d', strtotime($_POST['date1']));
-			$date2 = date('Y-m-d', strtotime($_POST['date2']));		
-			
+		if(isset($_POST['date1']) && isset($_POST['date2']) ){
+
 			$balance = new Balance();
-			$balance->setBalanceByPeriodOfTime($date1, $date2);
-			View::renderTemplate('/Balance/balance.html',
-			array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'option' => 2)
-			);
+			if($balance->setBalanceByPeriodOfTime($_POST['date1'], $_POST['date2'])){
+				
+				View::renderTemplate('/Balance/balance.html',
+				array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'saldoIncomes' => $balance->getIncomesAmount(), 'saldoExpenses' =>$balance->getExpensesAmount(),  'option' => 2)
+				);
+			}
+			else{
+				View::renderTemplate('/Balance/balance.html', ['option' => 5, 'balance' => $balance]);
+			}	
 		}
-		
 	}
-	
 }

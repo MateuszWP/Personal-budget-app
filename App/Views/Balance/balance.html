@@ -50,16 +50,7 @@
 	
 {% endblock %}
 
-{% block body %}
-
-    {% if user.errors is not empty %}
-        <p>Errors:</p>
-        <ul>
-            {% for error in user.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% block body %}   
 	
 	<div class="col-lg-3 offset-lg-7 col-md-4 offset-md-6 col-8 offset-2">
 		<div class="input-group form-group">
@@ -85,11 +76,21 @@
 		
 		  <div class="modal-header">
 			<h5 class="modal-title">Wybierz zakres czasu</h5>
+			
 			<button class="close" data-dismiss="modal">&times;</button>
 		  </div>
 		  
 		  <div class="modal-body">
 			<form action="/showBalance/showBalanceForPeriodOfTimeAction" id="formModal" method="post">
+			
+				{% if balance.errors is not empty %}
+					<p>Errors:</p>
+					<ul>
+						{% for error in balance.errors %}
+							<li>{{ error }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
 			
 			  <div class="form-group">
 				<label for="date">Od</label>
@@ -224,13 +225,13 @@
 			</div>
 				
 			<div  class="col-lg-6">
-				<h3 class="text-center py-2" >Suma przychodów:
+				<h3 class="text-center py-2" >Suma przychodów: {% for saldoIncome in saldoIncomes %} {{saldoIncome.sum}} {% endfor %}
 					 
 				</h3>
 			</div>
 			
 			<div  class="col-lg-6">
-				<h3 class="text-center py-2" >Suma wydatków:
+				<h3 class="text-center py-2" >Suma wydatków: {% for saldoExpense in saldoExpenses %} {{saldoExpense.sum}} {% endfor %}
 					 
 				</h3>
 			</div>
