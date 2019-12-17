@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block footer %}
+    <script src="/js/hideShowPassword.min.js"></script>
+
+    <script>
+        /**
+         * Add jQuery Validation plugin method for a valid password
+         *
+         * Valid passwords contain at least one letter and one number.
+         */
+        $.validator.addMethod('validPassword',
+            function(value, element, param) {
+
+                if (value != '') {
+                    if (value.match(/.*[a-z]+.*/i) == null) {
+                        return false;
+                    }
+                    if (value.match(/.*\d+.*/) == null) {
+                        return false;
+                    }
+                }
+
+                return true;
+            },
+            'Must contain at least one letter and one number'
+        );
+
+        $(document).ready(function() {
+
+            /**
+             * Validate the form
+             */
+            $('#formSignup').validate({
+                rules: {
+                    name: 'required',
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: '/account/validate-email'
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        validPassword: true
+                    }
+                },
+                messages: {
+                    email: {
+                        remote: 'email already taken'
+                    }
+                }
+            });
+
+
+            /**
+              * Show password toggle button
+              */
+            $('#inputPassword').hideShowPassword({
+                show: false,
+                innerToggle: 'focus'
+            });
+        });
+    </script>
+	
+	<script>
+		$(document).ready(function(){ //Make script DOM ready
+			$('#selectDate').change(function() { //jQuery Change Function
+				var opval = $(this).val(); //Get value from select element
+				if(opval==5){ //Compare it and if true
+					$('#customDate').modal("show"); //Open Modal
+				}
+			});
+		});
+	</script>
+	
+{% endblock %}
+
+{% block body %}
+
+    {% if user.errors is not empty %}
+        <p>Errors:</p>
+        <ul>
+            {% for error in user.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+	
+	<div class="col-lg-3 offset-lg-7 col-md-4 offset-md-6 col-8 offset-2">
+		<div class="input-group form-group">
+			<div>
+				<span class="input-group-text"><strong><i class="far fa-calendar-alt"></i></strong></span>
+			</div>
+			<form id="formBalance" action="/balance/showForOptionAction" method="post">
+			<select class="form-control" name="periodOfTime" id="selectDate" onchange="this.form.submit()"> 
+				<!--<select class="form-control" name="periodOfTime" id="selectDate">disabled hidden -->
+					<option value="1" >Okres czasu</option>
+					<option value="2">Bieżacy miesiac</option>
+					<option value="3">Poprzedni miesiąc</option>
+					<option value="4">Bieżacy rok</option>
+					<option value="5">Niestandardowy</option>
+				</select>
+			</form>
+		</div>
+	</div>
+	
+		<!--MODAL -->
+		<div class="modal" id="customDate">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+				<h5 class="modal-title">Wybierz zakres czasu</h5>
+				<button class="close" data-dismiss="modal">&times;</button>
+			  </div>
+			  
+			  <div class="modal-body">
+				<form id="formModal" method="post">
+				
+				  <div class="form-group">
+					<label for="date">Od</label>
+					<input class="form-control" type="date" min="2000-01-01" name="date1" id="date">
+				  </div>
+
+				  <div class="form-group">
+					<label for="date">Do</label>
+					<input class="form-control" type="date" min="2000-01-01" name="date2" id="date2">
+				  </div>
+				  
+				</form>
+			  </div>
+			  
+			  <div class="modal-footer">
+				<button type="submit" class="btn btn-primary" data-dismiss="modal" form="form" id="submitModal">Akceptuj</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+		
+		<header class="text-center">
+			<h1 class="display-4"><strong>BILANS</strong></h1>
+		</header>
+		
+		<div class="row">
+		<!-- Przychody i wydatki dla poszzegolnych kategorii -->
+			<div id="incomes" class="col-lg-6">
+				<h2 class="text-center py-2">Przychody w kategoriach <i class="fas fa-plus"></i></h2>
+				<table class="table table-success table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for incomeCategory in incomesCategory %}
+							<tr>
+								<th scope="."row".">aaaaaaa</th>
+								<td>{{incomeCategory.sum(amount)}}</td>
+								<td>{{incomeCategory.category}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<div id="expenses" class="col-lg-6">
+				<h2 class="text-center py-2">Wydatki w kategoriach <i class="fas fa-minus"></i></h2>
+				<table class="table table-warning table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for expenseCategory in expensesCategory %}
+							<tr>
+								<th scope="."row".">aaaaaaa</th>
+								<td>{{expenseCategory.SUM(amount)}}</td>
+								<td>{{expenseCategory.category}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Przychody i wydatki all info -->
+			<div id="incomes" class="col-lg-6">
+				<h2 class="text-center py-2">Przychody <i class="fas fa-plus"></i></h2>
+				<table class="table table-success table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Data</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for income in incomes %}
+							<tr>
+								<th scope="."row".">aaaaaaa</th>
+								<td>{{income.date}}</td>
+								<td>{{income.amount}}</td>
+								<td>{{income.category}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<div id="expenses" class="col-lg-6">
+				<h2 class="text-center py-2">Wydatki <i class="fas fa-minus"></i></h2>
+				<table class="table table-warning table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Data</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+				
+			<div  class="col-lg-6">
+				<h3 class="text-center py-2" >Suma przychodów:
+					 
+				</h3>
+			</div>
+			
+			<div  class="col-lg-6">
+				<h3 class="text-center py-2" >Suma wydatków:
+					 
+				</h3>
+			</div>
+		</div>
+		
+		
+	
+{% endblock %}
