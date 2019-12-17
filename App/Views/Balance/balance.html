@@ -94,13 +94,12 @@
 			<div>
 				<span class="input-group-text"><strong><i class="far fa-calendar-alt"></i></strong></span>
 			</div>
-			<form id="formBalance" action="/balance/showForOptionAction" method="post">
+			<form id="formBalance" action="/balance/decideAction" method="post">
 			<select class="form-control" name="periodOfTime" id="selectDate" onchange="this.form.submit()"> 
 				<!--<select class="form-control" name="periodOfTime" id="selectDate">disabled hidden -->
-					<option value="1" >Okres czasu</option>
-					<option value="2">Bieżacy miesiac</option>
-					<option value="3">Poprzedni miesiąc</option>
-					<option value="4">Bieżacy rok</option>
+					<option value="2" {% if option == 2 %} selected {% endif %}>Bieżacy miesiac</option>
+					<option value="3" {% if option == 3 %} selected {% endif %}>Poprzedni miesiąc</option>
+					<option value="4" {% if option == 4 %} selected {% endif %}>Bieżacy rok</option>
 					<option value="5">Niestandardowy</option>
 				</select>
 			</form>
@@ -158,17 +157,19 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% set number = 1 %}
 						{% for incomeCategory in incomesCategory %}
 							<tr>
-								<th scope="."row".">aaaaaaa</th>
-								<td>{{incomeCategory.sum(amount)}}</td>
+								<th scope="."row".">{{number}}</th>
+								<td>{{incomeCategory.sum}}</td>
 								<td>{{incomeCategory.category}}</td>
 							</tr>
+							{% set number = number +1 %}
 						{% endfor %}
 					</tbody>
 				</table>
 			</div>
-
+			
 			<div id="expenses" class="col-lg-6">
 				<h2 class="text-center py-2">Wydatki w kategoriach <i class="fas fa-minus"></i></h2>
 				<table class="table table-warning table-bordered">
@@ -180,12 +181,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% set number = 1 %}
 						{% for expenseCategory in expensesCategory %}
 							<tr>
-								<th scope="."row".">aaaaaaa</th>
-								<td>{{expenseCategory.SUM(amount)}}</td>
+								<th scope="."row".">{{number}}</th>
+								<td>{{expenseCategory.sum}}</td>
 								<td>{{expenseCategory.category}}</td>
 							</tr>
+							{% set number = number +1 %}
 						{% endfor %}
 					</tbody>
 				</table>
@@ -204,13 +207,15 @@
 						</tr>
 					</thead>
 					<tbody>
+						{% set number = 1 %}
 						{% for income in incomes %}
 							<tr>
-								<th scope="."row".">aaaaaaa</th>
+								<th scope="."row".">{{number}}</th>
 								<td>{{income.date}}</td>
 								<td>{{income.amount}}</td>
 								<td>{{income.category}}</td>
 							</tr>
+						{% set number = number +1 %}
 						{% endfor %}
 					</tbody>
 				</table>
@@ -228,7 +233,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+						{% set number = 1 %}
+						{% for expense in expenses %}
+							<tr>
+								<th scope="."row".">{{number}}</th>
+								<td>{{expense.date}}</td>
+								<td>{{expense.amount}}</td>
+								<td>{{expense.category}}</td>
+							</tr>
+						{% set number = number +1 %}
+						{% endfor %}
 					</tbody>
 				</table>
 			</div>

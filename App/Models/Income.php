@@ -90,17 +90,21 @@ class Income extends \Core\Model
      * @return mixed User object if found, false otherwise
      */
 	 
-    public static function findByDateOrCategory($month, $year, $category ='')
+    public static function findByDateOrCategory($year, $month='', $category ='')
     {
-		if($category == '')
+		if($month =='' && $category == true)
+			$sql = 'SELECT SUM(amount) as sum, category FROM incomes WHERE userId = :userId && year(date) = :year GROUP BY category';
+		else if($month =='')
+			$sql = 'SELECT date, amount, category FROM incomes WHERE userId = :userId && year(date) = :year';
+		else if($category == '')
 			$sql = 'SELECT date, amount, category FROM incomes WHERE userId = :userId && month(date) = :month && year(date) = :year';
 		else
-			$sql = 'SELECT SUM(amount), category FROM incomes WHERE userId = :userId && month(date) = :month && year(date) = :year GROUP BY category' ;
+			$sql = 'SELECT SUM(amount) as sum, category FROM incomes WHERE userId = :userId && month(date) = :month && year(date) = :year GROUP BY category' ;
 		
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
-        $stmt->bindValue(':month', $month, PDO::PARAM_STR);
+        if($month !=='') $stmt->bindValue(':month', $month, PDO::PARAM_STR);
         $stmt->bindValue(':year', $year, PDO::PARAM_STR);
 
 
