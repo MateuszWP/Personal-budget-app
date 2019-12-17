@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\Expense;
+use \App\Flash;
 
 /**
  * AddIncome controller
@@ -32,8 +33,16 @@ class AddExpense extends \Core\Controller
     {
         $expense = new Expense($_POST);
 		
-        $expense->save();
-		 View::renderTemplate('AddExpense/new.html');
+        if($expense->save()){
+			Flash::addMessage('Pomyślnie dodano wydatek');
+			View::renderTemplate('AddExpense/new.html');
+		}else{
+			Flash::addMessage('Nie udało sie dodać wydatku', Flash::WARNING);
+			View::renderTemplate('AddExpense/new.html',[
+                'expense' => $expense
+            ]);
+		}
+		 
     }
 	
 }

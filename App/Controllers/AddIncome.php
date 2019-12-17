@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\Income;
-
+use \App\Flash;
 /**
  * AddIncome controller
  *
@@ -32,8 +32,18 @@ class AddIncome extends \Core\Controller
     {
         $income = new Income($_POST);
 		
-        $income->save();
-		 View::renderTemplate('AddIncome/new.html');
+		 if($income->save()){
+			Flash::addMessage('Pomyślnie dodano przychód');
+			View::renderTemplate('AddIncome/new.html');
+		}else{
+			Flash::addMessage('Nie udało sie dodać przychodu', Flash::WARNING);
+			View::renderTemplate('AddIncome/new.html',[
+                'income' => $income
+            ]);
+		}
+		
+        
+		 
     }
 	
 }
