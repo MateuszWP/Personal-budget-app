@@ -72,23 +72,20 @@ class Expense extends \Core\Model
      */
     public function validate()
     {
-        // Amount
+       // Amount
         if ($this->amount == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Nalezy podac kwote';
         }
 
-		if ($this->amount < 0) {
+		if ($this->amount <= 0) {
             $this->errors[] = 'Wartosc musi być większa od zera';
         }
+		
+		if($this->date < "2000-01-01"){
+			$this->errors[] = 'Data musi być wcześniejsza niż 2000-01-01 ';
+		}
     }
 
-    /**
-     * Find a user model by ID
-     *
-     * @param string $id The user ID
-     *
-     * @return mixed User object if found, false otherwise
-     */
 	 public static function findByDateOrCategory($year, $month='', $category ='')
     {
 		if($month =='' && $category == true)
@@ -107,10 +104,32 @@ class Expense extends \Core\Model
         $stmt->bindValue(':year', $year, PDO::PARAM_STR);
 
 
-  //     $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+       $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
         $stmt->execute();
 
         return $stmt->fetchAll();
     }
+	
+	public static function findByPeriodOfTimeOrCategory($date1, $date2, $category='')
+    {
+
+		if($category == '')
+			$sql = 'SELECT date, amount, category FROM expenses WHERE userId = :userId && date>= :date1 && date<= :date2';
+		else
+			$sql = 'SELECT SUM(amount) as sum, category FROM expenses WHERE userId = :userId && date>= :date1 && date<= :date2 GROUP BY category' ;
+		
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':date1', $date1, PDO::PARAM_STR);
+        $stmt->bindValue(':date2', $date2, PDO::PARAM_STR);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+	
 }

@@ -4,77 +4,49 @@
 
 {% block footer %}
     <script src="/js/hideShowPassword.min.js"></script>
+    <script  language="JavaScript" type="text/javascript">
+      
+		$(document).ready(function() {
+			var selectedOption = $("#selectDate").children("option:selected").val();
+			if(selectedOption == 5)
+			{
+			$('#customDate').on('shown.bs.modal', function (e) {
+			  console.log('Modal is successfully shown!');
+			});
+				$modal = $('#customDate');
+				$modal.modal('show');
+				
+			}
+			if(selectedOption == "fail")
+			{
+				$modal = $('#customDate');
+				$modal.modal('show');
+			}
+			
+			var d = new Date();
+			var day = d.getDate();
+			var month = d.getMonth() +1;
+			var year = d.getFullYear();
 
-    <script>
-        /**
-         * Add jQuery Validation plugin method for a valid password
-         *
-         * Valid passwords contain at least one letter and one number.
-         */
-        $.validator.addMethod('validPassword',
-            function(value, element, param) {
+			if(day <=9) day='0'+day;
+			if(month <=9) month = '0' + month;
 
-                if (value != '') {
-                    if (value.match(/.*[a-z]+.*/i) == null) {
-                        return false;
-                    }
-                    if (value.match(/.*\d+.*/) == null) {
-                        return false;
-                    }
-                }
-
-                return true;
-            },
-            'Must contain at least one letter and one number'
-        );
-
-        $(document).ready(function() {
-
-            /**
-             * Validate the form
-             */
-            $('#formSignup').validate({
-                rules: {
-                    name: 'required',
-                    email: {
-                        required: true,
-                        email: true,
-                        remote: '/account/validate-email'
-                    },
-                    password: {
-                        required: true,
-                        minlength: 6,
-                        validPassword: true
-                    }
-                },
-                messages: {
-                    email: {
-                        remote: 'email already taken'
-                    }
-                }
-            });
-
-
-            /**
-              * Show password toggle button
-              */
-            $('#inputPassword').hideShowPassword({
-                show: false,
-                innerToggle: 'focus'
-            });
-        });
-    </script>
-	
-	<script>
-		$(document).ready(function(){ //Make script DOM ready
-			$('#selectDate').change(function() { //jQuery Change Function
-				var opval = $(this).val(); //Get value from select element
-				if(opval==5){ //Compare it and if true
-					$('#customDate').modal("show"); //Open Modal
-				}
+			$('#date').val(year+"-"+month+"-"+day);
+			$('#date2').val(year+"-"+month+"-"+day);
+			
+		});
+		
+		$(document).ready(function() {
+			$("#submitModal").click(function() {
+				$("#formModal").submit();
 			});
 		});
-	</script>
+		
+		$('#year').text(new Date().getFullYear());
+		
+		
+		
+    </script>
 	
 {% endblock %}
 
@@ -94,58 +66,62 @@
 			<div>
 				<span class="input-group-text"><strong><i class="far fa-calendar-alt"></i></strong></span>
 			</div>
-			<form id="formBalance" action="/balance/decideAction" method="post">
-			<select class="form-control" name="periodOfTime" id="selectDate" onchange="this.form.submit()"> 
-				<!--<select class="form-control" name="periodOfTime" id="selectDate">disabled hidden -->
+			<form name="formBalance" id="formBalance" action="/showBalance/decideAction" method="post">
+				<select class="form-control" name="periodOfTime" id="selectDate" onchange="this.form.submit()">  
+				<!--<select class="form-control" name="periodOfTime" id="selectDate">-->
 					<option value="2" {% if option == 2 %} selected {% endif %}>Bieżacy miesiac</option>
 					<option value="3" {% if option == 3 %} selected {% endif %}>Poprzedni miesiąc</option>
 					<option value="4" {% if option == 4 %} selected {% endif %}>Bieżacy rok</option>
-					<option value="5">Niestandardowy</option>
+					<option value="5" {% if option == 5 %} selected {% endif %}>Niestandardowy</option>
 				</select>
 			</form>
 		</div>
 	</div>
 	
-		<!--MODAL -->
-		<div class="modal" id="customDate">
-		  <div class="modal-dialog">
-			<div class="modal-content">
-			
-			  <div class="modal-header">
-				<h5 class="modal-title">Wybierz zakres czasu</h5>
-				<button class="close" data-dismiss="modal">&times;</button>
-			  </div>
-			  
-			  <div class="modal-body">
-				<form id="formModal" method="post">
-				
-				  <div class="form-group">
-					<label for="date">Od</label>
-					<input class="form-control" type="date" min="2000-01-01" name="date1" id="date">
-				  </div>
-
-				  <div class="form-group">
-					<label for="date">Do</label>
-					<input class="form-control" type="date" min="2000-01-01" name="date2" id="date2">
-				  </div>
-				  
-				</form>
-			  </div>
-			  
-			  <div class="modal-footer">
-				<button type="submit" class="btn btn-primary" data-dismiss="modal" form="form" id="submitModal">Akceptuj</button>
-			  </div>
-			  
-			</div>
-		  </div>
-		</div>
+	<!--MODAL -->
+	<div class="modal" id="customDate">
+	  <div class="modal-dialog">
+		<div class="modal-content">
 		
-		<header class="text-center">
-			<h1 class="display-4"><strong>BILANS</strong></h1>
-		</header>
+		  <div class="modal-header">
+			<h5 class="modal-title">Wybierz zakres czasu</h5>
+			<button class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  
+		  <div class="modal-body">
+			<form action="/showBalance/showBalanceForPeriodOfTimeAction" id="formModal" method="post">
+			
+			  <div class="form-group">
+				<label for="date">Od</label>
+				<input class="form-control" type="date" min="2000-01-01" name="date1" id="date" required>
+			  </div>
+
+			  <div class="form-group">
+				<label for="date">Do</label>
+				<input class="form-control" type="date" min="2000-01-01" name="date2" id="date2" required>
+			  </div>
+			  
+			</form>
+		  </div>
+		  
+		  <div class="modal-footer">
+			<button type="submit" class="btn btn-primary" data-dismiss="modal" form="form" id="submitModal">Akceptuj</button>
+		  </div>
+		  
+		</div>
+	  </div>
+	</div>
+		
+				
+		<div  class="col">
+			<header class="text-center">
+				<h1 class="display-4"><strong>BILANS</strong></h1>
+			</header>
+		</div>
 		
 		<div class="row">
 		<!-- Przychody i wydatki dla poszzegolnych kategorii -->
+		
 			<div id="incomes" class="col-lg-6">
 				<h2 class="text-center py-2">Przychody w kategoriach <i class="fas fa-plus"></i></h2>
 				<table class="table table-success table-bordered">

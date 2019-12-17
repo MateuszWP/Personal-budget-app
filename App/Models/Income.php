@@ -34,7 +34,6 @@ class Income extends \Core\Model
         };
     }
 	
-	
     /**
      * Save the user model with the current property values
      *
@@ -74,12 +73,16 @@ class Income extends \Core\Model
     {
         // Amount
         if ($this->amount == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Nalezy podac kwote';
         }
 
-		if ($this->amount < 0) {
+		if ($this->amount <= 0) {
             $this->errors[] = 'Wartosc musi być większa od zera';
         }
+		
+		if($this->date < "2000-01-01"){
+			$this->errors[] = 'Data musi być wcześniejsza niż 2000-01-01 ';
+		}
     }
 
     /**
@@ -115,6 +118,25 @@ class Income extends \Core\Model
         return $stmt->fetchAll();
     }
 	
+	 public static function findByPeriodOfTimeOrCategory($date1, $date2, $category='')
+    { 
+			if($category == '')
+				$sql = 'SELECT date, amount, category FROM incomes WHERE userId = :userId && date>= :date1 && date<= :date2';
+			else
+				$sql = 'SELECT SUM(amount) as sum, category FROM incomes WHERE userId = :userId && date>= :date1 && date<= :date2 GROUP BY category' ;
+			
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':date1', $date1, PDO::PARAM_STR);
+			$stmt->bindValue(':date2', $date2, PDO::PARAM_STR);
+
+			$stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+    }
 	
 	
 }
