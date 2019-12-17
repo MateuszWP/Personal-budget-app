@@ -22,6 +22,51 @@
 		<small>Zadbaj o balans swoich przychodów i wydatków</small>
 	</div>
 	
+	<nav class="navbar navbar-expand-md  navbar-light py-2 mb-4" >
+		<div class="container" >
+		
+			<button class="navbar-toggler ml-auto" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon "></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				
+				<ul class="navbar-nav mx-auto ">
+					{% if current_user %}
+						<li class="nav-item">
+							<a href="#" class="nav-link">Strona Główna</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">Dodaj Przychód</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">Dodaj Wydatek</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">Bilans</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">Ustawienia</a>
+						</li>
+						<li class="nav-item">
+							<a href="/logout" class="nav-link">Wyloguj</a>
+						</li>	
+					{% else %}
+					<li class="nav-item">
+						<a href="/signup/new" class="nav-link">Zarejestruj się</a>
+					</li>
+					<li class="nav-item">
+						<a  href="/login" class="nav-link">Zaloguj się</a>
+					</li>
+				
+					{% endif %}
+				</ul>
+				
+			</div>
+			
+		</div>
+	</nav>
+	
     {% for message in flash_messages %}
         <!-- <div class="alert"> -->
         <div class="alert alert-{{ message.type }}">
