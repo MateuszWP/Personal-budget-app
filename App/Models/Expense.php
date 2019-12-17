@@ -9,7 +9,7 @@ use PDO;
  *
  * PHP version 7.0
  */
-class Income extends \Core\Model
+class Expense extends \Core\Model
 {
 
     /**
@@ -46,14 +46,16 @@ class Income extends \Core\Model
 
         if (empty($this->errors)) {
 
-            $sql = 'INSERT INTO incomes (amount, date, category, comment)
-                    VALUES (:amount, :date, :category, :comment)';
+            $sql = 'INSERT INTO expenses (userId, amount, date, payingMethod ,category, comment)
+                    VALUES (:userId, :amount, :date, :payingMethod, :category, :comment)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
 
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);
+            $stmt->bindValue(':payingMethod', $this->payingMethod, PDO::PARAM_STR);
             $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
 
