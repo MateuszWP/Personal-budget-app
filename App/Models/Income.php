@@ -46,12 +46,14 @@ class Income extends \Core\Model
 
         if (empty($this->errors)) {
 
-            $sql = 'INSERT INTO incomes (amount, date, category, comment)
-                    VALUES (:amount, :date, :category, :comment)';
-
+            $sql = 'INSERT INTO incomes (userId, amount, date, category, comment)
+                    VALUES (:userId, :amount, :date, :category, :comment)';
+					
+			
             $db = static::getDB();
             $stmt = $db->prepare($sql);
-
+		
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
             $stmt->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);
             $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
@@ -87,20 +89,28 @@ class Income extends \Core\Model
      *
      * @return mixed User object if found, false otherwise
      */
-	 /*
-    public static function findByID($id)
+	 
+    public static function findByDateOrCategory($month, $year, $category ='')
     {
-        $sql = 'SELECT * FROM users WHERE id = :id';
-
+		if($category == '')
+			$sql = 'SELECT date, amount, category FROM incomes WHERE userId = :userId && month(date) = :month && year(date) = :year';
+		else
+			$sql = 'SELECT SUM(amount), category FROM incomes WHERE userId = :userId && month(date) = :month && year(date) = :year GROUP BY category' ;
+		
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':month', $month, PDO::PARAM_STR);
+        $stmt->bindValue(':year', $year, PDO::PARAM_STR);
+
 
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
 
         $stmt->execute();
 
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
-	*/
+	
+	
+	
 }
