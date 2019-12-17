@@ -1,6 +1,7 @@
 {
     "require": {
-        "twig/twig": "~2.0"
+        "twig/twig": "~2.0",
+        "symfony/debug": "^4.4"
     },
     "autoload": {
         "psr-4": {

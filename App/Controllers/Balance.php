@@ -21,23 +21,35 @@ class Balance extends \Core\Controller
      */
     public function newAction()
     {
-        View::renderTemplate('/Balance/balance.html');
+		$this-> showBalance(2, date('Y'), date('m'));
+      //  View::renderTemplate('/Balance/balance.html');
     }
 
-	public function showForOptionAction(){
+	public function decideAction(){
 		if($_POST['periodOfTime'] == 2){
-			$incomesCategory = Income::findByDateOrCategory(date('m'),date('Y'), true);
-			$incomes = Income::findByDateOrCategory(date('m'),date('Y'));
-			
-			$expensesCategory = Expense::findByDateOrCategory(date('m'),date('Y'), true);
-	//		print_r($expensesCategory);
-			View::renderTemplate('/Balance/balance.html',
-				array('incomes' => $incomes, 'incomesCategory' => $incomesCategory, 'expensesCategory' =>$expensesCategory)
-			);
+			$this-> showBalance(2, date('Y'), date('m'));
 		}
-
+		else if($_POST['periodOfTime'] == 3){
+			$this-> showBalance(3, date('Y'), date('m')-1);
+		}
+		else if($_POST['periodOfTime'] == 4){
+			$this-> showBalance(4, date('Y'));
+		}
+		else if($_POST['periodOfTime'] == 5){
+			View::renderTemplate('/Balance/balance.html');
+		}
 	}
 	
- 
+	public function showBalance($option, $year, $month=''){
+		$incomesCategory = Income::findByDateOrCategory($year,$month, true);
+		$incomes = Income::findByDateOrCategory($year,$month);
+		
+		$expensesCategory = Expense::findByDateOrCategory($year,$month, true);
+		$expenses = Expense::findByDateOrCategory($year,$month);
+//		print_r($expensesCategory);
+		View::renderTemplate('/Balance/balance.html',
+			array('incomes' => $incomes, 'incomesCategory' => $incomesCategory, 'expensesCategory' =>$expensesCategory, 'expenses' => $expenses, 'option' => $option)
+			);
+	}
 	
 }
