@@ -11,3 +11,55 @@
 .alert-warning {
     background-color: #fcf8e3;
 }
+
+body{
+	background-color: #ddd;
+}
+
+.logo{
+	min-height: 80px;
+	background-color: #333;
+	color: white;
+	text-align: center;
+}
+
+#logowanie{
+	border: solid 2px #eee;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+h2 {
+	letter-spacing: 2px;
+}
+
+nav {
+	background-color: #eee
+}
+
+nav a {
+	color: #444;
+}
+
+nav a:hover {
+	background-color: #999;
+	color: #eee;
+}
+
+#form .btn {
+	width: 100%;
+}
+
+#incomes {
+	background-color: #86db93;
+}
+
+#expenses {
+	background-color: #f2be11;
+}
+
+@media (max-width: 991px) {
+	#expenses {
+		margin-top: 10px;
+	}
+}

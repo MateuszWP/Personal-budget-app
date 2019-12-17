@@ -2,11 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="css/style.css" />
+	<script src="https://kit.fontawesome.com/40a173cedf.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css" />
+	
+	<meta name="author" content="Paweł Paczwa"/>
+	<meta name="description" content="Manage yours finances by looking at yours incomes and expenses" />
+	<meta name="keywords" content="finances, incomes, expenses, saldo, money" />
+
 </head>
 <body>
 
+	<div class="logo py-2  text-center ">
+		<h1><i class="fas fa-balance-scale"></i> Finanse</h1>
+		<small>Zadbaj o balans swoich przychodów i wydatków</small>
+	</div>
+	
     {% for message in flash_messages %}
         <!-- <div class="alert"> -->
         <div class="alert alert-{{ message.type }}">
@@ -14,13 +29,33 @@
         </div>
     {% endfor %}
 
+	<div class="container">
+		<div class="row">
+
     {% block body %}
     {% endblock %}
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+		</div>
+	</div>
 
+	
     {% block footer %}
     {% endblock %}
+	
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+	<script
+	src="http://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+	<script>
+	// Get the current year for the copyright
+	$('#year').text(new Date().getFullYear());
+	</script>
+	
 </body>
 </html>
