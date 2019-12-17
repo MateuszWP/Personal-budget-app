@@ -34,13 +34,13 @@
 				<ul class="navbar-nav mx-auto ">
 					{% if current_user %}
 						<li class="nav-item">
-							<a href="#" class="nav-link">Strona Główna</a>
+							<a href="/home/index" class="nav-link">Strona Główna</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">Dodaj Przychód</a>
+							<a href="/addIncome/new" class="nav-link">Dodaj Przychód</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">Dodaj Wydatek</a>
+							<a href="/addExpense/new" class="nav-link">Dodaj Wydatek</a>
 						</li>
 						<li class="nav-item">
 							<a href="#" class="nav-link">Bilans</a>
@@ -97,8 +97,23 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 	<script>
-	// Get the current year for the copyright
-	$('#year').text(new Date().getFullYear());
+		// Get the current year for the copyright
+		$('#year').text(new Date().getFullYear());
+		
+		$(document).ready( function() 
+		{
+			var d = new Date();
+			var day = d.getDate();
+			var month = d.getMonth() +1;
+			var year = d.getFullYear();
+
+			if(day <=9) day='0'+day;
+			if(month <=9) month = '0' + month;
+
+			//alert(day +"-"+month+"-"+year);
+			$('#inputDate').val(year+"-"+month+"-"+day);
+			
+		})
 	</script>
 	
 </body>
