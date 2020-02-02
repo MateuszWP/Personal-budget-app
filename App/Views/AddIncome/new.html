@@ -22,12 +22,14 @@
 {% block body %}
 
     {% if income.errors is not empty %}
+	<div class="col-12">
         <p>Errors:</p>
         <ul>
             {% for error in income.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
         </ul>
+	</div>
     {% endif %}
 	
 	<div class="col-md-4 offset-md-4  col-8 offset-2  text-center mt-5" id="logowanie">

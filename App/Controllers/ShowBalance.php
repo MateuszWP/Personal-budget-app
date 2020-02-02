@@ -27,7 +27,7 @@ class ShowBalance extends \Core\Controller
     public function newAction()
     {
         View::renderTemplate('/Balance/balance.html');
-		$this-> showBalance(2, date('Y'), date('m'));
+	//	$this-> showBalance(2, date('Y'), date('m'));
     }
 
 	public function decideAction(){
@@ -40,7 +40,12 @@ class ShowBalance extends \Core\Controller
 			$this-> showBalance(2, date('Y'), date('m'));
 		}
 		else if($_POST['time'] == 3){
-			$this-> showBalance(3, date('Y'), date('m')-1);
+			if(date('m')==1)
+			{
+				$this-> showBalance(3, date('Y')-1, 12);
+			}
+			else
+				$this-> showBalance(3, date('Y'), date('m')-1);
 		}
 		else if($_POST['time'] == 4){
 			$this-> showBalance(4, date('Y'));
@@ -51,6 +56,7 @@ class ShowBalance extends \Core\Controller
 	}
 	
 	public function showBalance($option, $year, $month=''){
+	//	echo '<script>alert("Welcome to Geeks for Geeks")</script>'; 
 		$balance = new Balance( );
 		$balance->setBalance($year, $month);
 		View::renderTemplate('/Balance/tables.html',
@@ -65,12 +71,12 @@ class ShowBalance extends \Core\Controller
 			$balance = new Balance();
 			if($balance->setBalanceByPeriodOfTime($_POST['date1'], $_POST['date2'])){
 				
-				View::renderTemplate('/Balance/balance.html',
+				View::renderTemplate('/Balance/tables.html',
 				array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'saldoIncomes' => $balance->getIncomesAmount(), 'saldoExpenses' =>$balance->getExpensesAmount(),  'option' => 2)
 				);
 			}
 			else{
-				View::renderTemplate('/Balance/balance.html', ['option' => 5, 'balance' => $balance]);
+				View::renderTemplate('/Balance/tables.html', ['option' => 5, 'balance' => $balance]);
 			}	
 		}
 	}
