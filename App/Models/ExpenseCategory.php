@@ -33,6 +33,22 @@ class ExpenseCategory extends \Core\Model
 		fclose($myfile);
 	}
 	
+	public static function findByID($id)
+    {
+        $sql = 'SELECT * FROM expenseCategories WHERE userId = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+       $stmt->execute();
+		
+        return $stmt->fetchAll();
+		
+    }
+	
     public function save()
     {
         $this->validate();
