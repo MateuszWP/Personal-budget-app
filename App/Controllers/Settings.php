@@ -112,12 +112,37 @@ class Settings extends \Core\Controller
 		$this->newAction();
 	}
 	
-	
 	public function addPayingMethodAction()
 	{
 		$method = $_POST['category'];
 		
 		if(PayingMethods::addPayingMethod($method)){
+			Flash::addMessage('Udało się dodać metodę płatności');
+		}
+		else {
+			Flash::addMessage('Nie udało się dodac metody płatności, proszę ponowić próbę',Flash::WARNING);
+        }
+		$this->newAction();
+	}
+	
+	public function addIncomeCategoryAction()
+	{
+		$method = $_POST['category'];
+		
+		if(IncomeCategory::addIncomeCategory($method)){
+			Flash::addMessage('Udało się dodać metodę płatności');
+		}
+		else {
+			Flash::addMessage('Nie udało się dodac metody płatności, proszę ponowić próbę',Flash::WARNING);
+        }
+		$this->newAction();
+	}
+	
+	public function addExpenseCategoryAction()
+	{
+		$method = $_POST['category'];
+		
+		if(ExpenseCategory::addExpenseCategory($method)){
 			Flash::addMessage('Udało się dodać metodę płatności');
 		}
 		else {
