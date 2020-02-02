@@ -20,19 +20,19 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'mvclogin';
+    const DB_NAME = 'matpacz_budzet';
 
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'root';
+    const DB_USER = 'matpacz_budzet';
 
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = '';
+    const DB_PASSWORD = '451@Mateusz';
 
     /**
      * Show or hide error messages on screen
@@ -44,5 +44,5 @@ class Config
      * Secret key for hashing
      * @var boolean
      */
-    const SECRET_KEY = 'secret';
+    const SECRET_KEY = '451@Mateusz';
 }

@@ -18,7 +18,7 @@ class PayingMethods extends \Core\Model
 		
 		while(!feof($myfile)){
 			$category = chop(fgets($myfile));
-			$sql = 'INSERT INTO payingmethods (userId, payingMethod)
+			$sql = 'INSERT INTO payingMethods (userId, payingMethod)
                     VALUES (:userId, :payingMethod)';
 					
 			$db = static::getDB();
@@ -36,7 +36,7 @@ class PayingMethods extends \Core\Model
 	
 	 public static function findByID($id)
     {
-        $sql = 'SELECT * FROM payingmethods WHERE userId = :id';
+        $sql = 'SELECT * FROM payingMethods WHERE userId = :id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
