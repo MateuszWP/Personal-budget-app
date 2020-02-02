@@ -75,15 +75,23 @@ class User extends \Core\Model
             $this->errors[] = 'Name is required';
         }
 
-        // email address
+		$this->validateEmail();
+		
+		$this->validatePassword();
+    }
+	
+	public function validateEmail(){
+		// email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
             $this->errors[] = 'Invalid email';
         }
         if (static::emailExists($this->email)) {
             $this->errors[] = 'email already taken';
         }
+	}
 
-        // Password
+	public function validatePassword(){
+		// Password
         if (strlen($this->password) < 6) {
             $this->errors[] = 'Please enter at least 6 characters for the password';
         }
@@ -95,8 +103,8 @@ class User extends \Core\Model
         if (preg_match('/.*\d+.*/i', $this->password) == 0) {
             $this->errors[] = 'Password needs at least one number';
         }
-    }
-
+	}
+	
     /**
      * See if a user record already exists with the specified email
      *
@@ -202,4 +210,62 @@ class User extends \Core\Model
 
         return $stmt->execute();
     }
+	
+	public function saveChanges(){
+		 if (empty($this->errors)) {
+
+            $sql = 'UPDATE users SET name = :name, email = :email, password_hash =:password_hash WHERE id = :userId' ;
+
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
+            $stmt->bindValue(':password_hash', $this->password_hash, PDO::PARAM_STR);
+            $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+
+            return $stmt->execute();
+        }
+		
+		return false;
+	}
+	
+	public function validatePasswordBeforeChange($password){
+		// Password
+        if (strlen($password) < 6) {
+            $this->errors[] = 'Please enter at least 6 characters for the password';
+        }
+
+        if (preg_match('/.*[a-z]+.*/i', $password) == 0) {
+            $this->errors[] = 'Password needs at least one letter';
+        }
+
+        if (preg_match('/.*\d+.*/i', $password) == 0) {
+            $this->errors[] = 'Password needs at least one number';
+        }
+	}
+	
+	public function changePersonalInfo($name, $email, $password){
+		print_r($this);
+		if($name != ''){
+			$this->name = $name;
+		}
+		if($password != ''){
+			$this->validatePasswordBeforeChange($password);
+			if(empty($this->errors)){
+				$this->password_hash = password_hash($password, PASSWORD_DEFAULT);
+			}
+		}
+		if($email != ''){
+			$this->email = $email;
+			$this->validateEmail();
+		}
+		if($name =='' && $email == '' && $password == ''){
+			$this->errors[] = 'Zeby zmienić dane wypelnij przynajmniej jedno z poniższych pól';
+		}
+		
+		return $this->saveChanges();
+	}
+	
+	
 }
