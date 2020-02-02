@@ -154,7 +154,7 @@ class Settings extends \Core\Controller
 	public function editPayingMethodAction(){
 		
 		$newMethod = $_POST['category'];
-		$oldMethod = $_POST['EditPayingMethod'];
+		$oldMethod = $_POST['editCategoryRadio'];
 		
 		if(PayingMethods::editPayingMethod($newMethod, $oldMethod)){
 			Flash::addMessage('Udało się z edytować metodę płatności');
@@ -164,6 +164,35 @@ class Settings extends \Core\Controller
         }
 		$this->newAction();
 		
+	}
+	
+	public function editIncomeCategoryAction(){
+		
+		$newCategory = $_POST['category'];
+		$oldCategory = $_POST['editCategoryRadio'];
+		
+		if(IncomeCategory::editIncomeCategory($newCategory, $oldCategory)){
+			Flash::addMessage('Udało się z edytować metodę płatności');
+		}
+		else {
+			Flash::addMessage('Nie udało się z edytowac metody płatności, proszę ponowić próbę',Flash::WARNING);
+        }
+		$this->newAction();
+	}
+	
+	public function editExpenseCategoryAction(){
+		
+		$newCategory= $_POST['category'];
+		$limitAmount= $_POST['limitAmount'];
+		$oldCategory = $_POST['editCategoryRadio'];
+		
+		if(ExpenseCategory::editExpenseCategory($newCategory, $oldCategory, $limitAmount)){
+			Flash::addMessage('Udało się z edytować metodę płatności');
+		}
+		else {
+			Flash::addMessage('Nie udało się z edytowac metody płatności, proszę ponowić próbę',Flash::WARNING);
+        }
+		$this->newAction();
 	}
 	
 }

@@ -6,21 +6,6 @@
 
 <script>
 	$(document).ready(function() {
-		$('#editPayingMethodButton').click(function() {
-				var radioValue = $("input[name='payingMethod']:checked").val();
-				if(radioValue){
-					$("input[name=EditPayingMethod]").val(radioValue);
-				}
-		});
-		
-		$('.deleteCategory').click(function () {
-			var formName = this.name;
-			//alert(formName);
-			$('#deleteCategoryButton' ).attr('form', formName);
- 
-			//alert(this.name);
-		});
-		
 		$('.deleteCategory').click(function () {
 			var formName = this.name;
 			alert(formName);
@@ -37,6 +22,20 @@
 			$('.addForm').attr('action', '/settings/'+ formID);
  
 		});
+		
+		$('.editCategory').click(function () {
+			var formID = this.name;
+			//alert(formID);
+			$('#editCategoryButton' ).attr('form', formID);
+			$('.editForm').attr('id', formID);
+			$('.editForm').attr('action', '/settings/'+ formID);
+			var radioValue = $("input[name='"+this.id+"']:checked").val();
+			if(radioValue){
+				$("input[name=editCategoryRadio]").val(radioValue);
+			}
+ 
+		});
+		
 		
 	});
 	
@@ -108,7 +107,7 @@
 		  </div>
 
 		<div class="card">
-			<a href="#incomeCategory" data-parent="#accordion" data-toggle="collapse">
+			<a href="#incomeCategoryCard" data-parent="#accordion" data-toggle="collapse">
 				<div class="card-header py-1">
 				  <h5>
 					 <i class="fas fa-tag"></i> Kategorie przychodów
@@ -117,7 +116,7 @@
 			</a>
 			
 			<!--INCOMES-->
-			<div id="incomeCategory" class="collapse">
+			<div id="incomeCategoryCard" class="collapse">
 			  <div class="card-body">
 				<form id="deleteIncomeCategoryForm" method="post" action="/settings/deleteIncomeCategory">
 					{% for incomeCategory in incomeCategories %}
@@ -133,7 +132,7 @@
 					</div>
 					
 					<div class="col-md-4">
-						<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" name="editIncomeCategory">
+						<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" name="editIncomeCategory" id="incomeCategory">
 							<i class="fas fa-plus"></i> Edytuj metodę 
 						</button>
 					</div>
@@ -149,7 +148,7 @@
 		</div>
 
 		  <div class="card">
-			<a href="#expenseCategory" data-parent="#accordion" data-toggle="collapse">
+			<a href="#expenseCategoryCard" data-parent="#accordion" data-toggle="collapse">
 				<div class="card-header py-1" >
 				  <h5>
 					  <i class="fas fa-shopping-cart"></i> Kategorie wydatków
@@ -158,7 +157,7 @@
 			</a>
 			
 			<!--EXPENSE-->
-			<div id="expenseCategory" class="collapse">
+			<div id="expenseCategoryCard" class="collapse">
 			  <div class="card-body">
 				<form id="deleteExpenseCategoryForm" method="post" action="/settings/deleteExpenseCategory">
 					{% for expenseCategory in expenseCategories %}
@@ -167,13 +166,13 @@
 				</form>
 					<div class="row">
 						<div class="col-md-4">
-							<button class="btn btn-success btn-inline-block addCategory" data-toggle="modal" data-target="#modalAddCategory" name="addExpenseCategory">
+							<button class="btn btn-success btn-inline-block addCategory" data-toggle="modal" data-target="#modalAddCategory" name="addExpenseCategory" >
 								<i class="fas fa-plus"></i> Dodaj Kategorię
 							</button>
 						</div>
 						
 						<div class="col-md-4">
-							<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" name="editExpenseCategory">
+							<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditExpenseCategory" name="editExpenseCategory" id="expenseCategory">
 								<i class="fas fa-plus"></i> Edytuj metodę 
 							</button>
 						</div>
@@ -189,7 +188,7 @@
 		  </div>
 		  
 		  <div class="card">
-			<a href="#payingMethods" data-parent="#accordion" data-toggle="collapse">
+			<a href="#payingMethodsCard" data-parent="#accordion" data-toggle="collapse">
 				<div class="card-header py-1 card-header-style">
 				  <h5>
 					<i class="fas fa-receipt"></i>  Metody płatności
@@ -198,7 +197,7 @@
 			</a>
 			
 			<!--payingMethod-->
-			<div id="payingMethods" class="collapse">
+			<div id="payingMethodsCard" class="collapse">
 				<div class="card-body">
 					<form id="deletePayingMethodForm" method="post" action="/settings/deletePayingMethod">
 						{% for payingMethod in payingMethods %}
@@ -214,7 +213,7 @@
 						</div>
 						
 						<div class="col-md-4">
-							<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" id="editPayingMethodButton" name="editPayingMethod">
+							<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" name="editPayingMethod" id="payingMethod">
 								<i class="fas fa-plus"></i> Edytuj metodę 
 							</button>
 						</div>
@@ -293,7 +292,7 @@
 			  </div>
 			  
 			  <div class="modal-body">
-				<form id="editPayingMethodForm" method="post" action="/settings/editPayingMethod">
+				<form class="editForm" method="post" >
 					<div class="input-group form-group">
 						<div>
 							<span class="input-group-text"><strong><i class="fas fa-pen"></i></strong></span>
@@ -301,11 +300,50 @@
 						<input class="form-control" type="text" placeholder="Nazwa kategorii" name="category"/>
 					</div>
 					<div class="" style="display:none">
-						<input type="radio" name="EditPayingMethod" checked>
+						<input type="radio" name="editCategoryRadio" checked>
 					</div>
 				</form>
 				
-				<button type="submit" value="Submit" form="editPayingMethodForm" class="btn btn-primary" >Akceptuje</button>
+				<button id="editCategoryButton" type="submit" value="Submit" form="editPayingMethodForm" class="btn btn-primary" >Akceptuje</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+		
+		<!--MODAL  edytuj  kategorie DLA EXPENSE dodanie limitu -->
+		<div class="modal" id="modalEditExpenseCategory">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+				<h5 class="modal-title">Podaj nową nazwe dla wybranej kategorii oraz ustaw limit (nieobowiązkowe)</h5>
+				
+				<button class="close" data-dismiss="modal">&times;</button>
+			  </div>
+			  
+			  <div class="modal-body">
+				<form id="editExpenseCategory" method="post" action="/settings/editExpenseCategory">
+					<div class="input-group form-group">
+						<div>
+							<span class="input-group-text"><strong><i class="fas fa-pen"></i></strong></span>
+						</div>
+						<input class="form-control" type="text" placeholder="Nazwa kategorii" name="category"/>
+					</div>
+					
+					<div class="input-group form-group">
+						<div>
+							<span class="input-group-text"><strong><i class="fas fa-coins"></i></strong></span>
+						</div>
+						<input class="form-control" type="number" placeholder="Wartość limitu" step="0.01" min="0" name="limitAmount">
+					</div>
+					
+					<div class="" style="display:none">
+						<input type="radio" name="editCategoryRadio" checked>
+					</div>
+				</form>
+				
+				<button id="editCategoryButton" type="submit" value="Submit" form="editExpenseCategory" class="btn btn-primary" >Akceptuje</button>
 			  </div>
 			  
 			</div>
@@ -313,5 +351,9 @@
 		</div>
 		
 	</div>
+		
+	</div>
+	
+	
 	
 {% endblock %}
