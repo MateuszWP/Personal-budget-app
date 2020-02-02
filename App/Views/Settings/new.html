@@ -8,11 +8,11 @@
 
 {% block body %}
 
-    {% if expense.errors is not empty %}
+    {% if user.errors is not empty %}
 	<div class="col-12">
         <p>Errors:</p>
         <ul>
-            {% for error in expense.errors %}
+            {% for error in user.errors %}
                 <li>{{ error }}</li>
             {% endfor %}
         </ul>
@@ -37,19 +37,19 @@
 			
 			<div id="personalInfo" class="collapse">
 			  <div class="card-body">
-				<form id="personalInfoForm" method="post">
+				<form id="personalInfoForm" action="/settings/changePersonalInfo" method="post">
 					<div class="input-group form-group">
 						<div>
 							<span class="input-group-text"><strong><i class="fas fa-user"></i></strong></span>
 						</div>
-						<input id="inputName"  class="form-control" type="text" placeholder="Imię" name="name"value="{{ user.name }}"  />
+						<input id="inputName"  class="form-control" type="text" placeholder="Imię" name="name"  />
 					</div>
 					
 					<div class="input-group form-group">
 						<div>
 							<span class="input-group-text"><strong><i class="fas fa-at"></i></strong></span>
 						</div>
-						<input id="inputEmail"  class="form-control" type="email" placeholder="Adres email" name="email" value="{{ user.email }}"/>
+						<input id="inputEmail"  class="form-control" type="email" placeholder="Adres email" name="email"/>
 					</div>
 					
 					<div class="input-group form-group">
