@@ -5,6 +5,9 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\User;
 use \App\Flash;
+use \App\Models\IncomeCategory;
+use \App\Models\ExpenseCategory;
+use \App\Models\PayingMethods;
 
 /**
  * Signup controller
@@ -34,6 +37,10 @@ class Signup extends \Core\Controller
         $user = new User($_POST);
 
         if ($user->save()) {
+			IncomeCategory::setUserCategoriesAfterSingup(User::findByEmail($user->email)->id);
+			ExpenseCategory::setUserCategoriesAfterSingup(User::findByEmail($user->email)->id);
+			PayingMethods::setUserCategoriesAfterSingup(User::findByEmail($user->email)->id);
+			
 			Flash::addMessage('Rejestracja udana');
 			View::renderTemplate('Login/new.html');
 			 
