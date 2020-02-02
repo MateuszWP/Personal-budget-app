@@ -72,11 +72,11 @@ class ShowBalance extends \Core\Controller
 			if($balance->setBalanceByPeriodOfTime($_POST['date1'], $_POST['date2'])){
 				
 				View::renderTemplate('/Balance/tables.html',
-				array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'saldoIncomes' => $balance->getIncomesAmount(), 'saldoExpenses' =>$balance->getExpensesAmount(),  'option' => 2)
+				array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'saldoIncomes' => $balance->getIncomesAmount(), 'saldoExpenses' =>$balance->getExpensesAmount(),  'option' => 3)
 				);
 			}
 			else{
-				View::renderTemplate('/Balance/tables.html', ['option' => 5, 'balance' => $balance]);
+				View::renderTemplate('/Balance/tables.html', ['option' => 6, 'balance' => $balance]);
 			}	
 		}
 	}

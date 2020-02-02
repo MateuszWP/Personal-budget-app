@@ -115,3 +115,28 @@
 			</div>
 		</div>
 </div>
+
+<script>
+
+$( document ).ajaxComplete(function() {
+
+	var option = {{ option }};
+	
+	if(option== 6)
+	{
+		var error ="{% if balance.errors is not empty %}"+
+					"<p>Errors:</p>"+
+					"<ul>"+
+						"{% for error in balance.errors %}"+
+							"<li>{{ error }}</li>"+
+						"{% endfor %}"+
+					"</ul>"+
+				"{% endif %}";
+		$('.modalErrors').html(error);
+	}
+	else{
+	$('.modalErrors').empty(error);
+	}
+
+});
+</script>
