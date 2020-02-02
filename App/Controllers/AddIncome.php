@@ -38,12 +38,10 @@ class AddIncome extends \Core\Controller
 		
 		 if($income->save()){
 			Flash::addMessage('Pomyślnie dodano przychód');
-			View::renderTemplate('AddIncome/new.html');
+			$this->newAction();
 		}else{
 			Flash::addMessage('Nie udało sie dodać przychodu', Flash::WARNING);
-			View::renderTemplate('AddIncome/new.html',[
-                'income' => $income
-            ]);
+			View::renderTemplate('AddIncome/new.html', array('income' => $income,'incomeCategories' => IncomeCategory::findByID($_SESSION['user_id'])));
 		}
 		
         
