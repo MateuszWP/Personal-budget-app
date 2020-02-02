@@ -43,12 +43,11 @@ class AddExpense extends \Core\Controller
 		
         if($expense->save()){
 			Flash::addMessage('Pomyślnie dodano wydatek');
-			View::renderTemplate('AddExpense/new.html');
+			$this->newAction();
 		}else{
 			Flash::addMessage('Nie udało sie dodać wydatku', Flash::WARNING);
-			View::renderTemplate('AddExpense/new.html',[
-                'expense' => $expense
-            ]);
+			View::renderTemplate('AddExpense/new.html',array('payingMethods' =>PayingMethods::findByID($_SESSION['user_id']), 'expenseCategories' =>ExpenseCategory::findByID($_SESSION['user_id']),'expense' => $expense));
+
 		}
 		 
     }
