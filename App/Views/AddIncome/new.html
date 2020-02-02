@@ -58,10 +58,9 @@
 					<span class="input-group-text"><strong><i class="fas fa-tag"></i></strong></span>
 				</div>
 				<select class="form-control" name="category">
-					<option value="Wynagrodzenie" selected>Wynagrodzenie</option>
-					<option value="Odsetki bankowe" >Odsetki bankowe</option>
-					<option value="Sprzedaż na allegro">Sprzedaż na allegro</option>
-					<option value="Inne">Inne</option>
+					{% for incomeCategory in incomeCategories %}
+					<option value="{{incomeCategory.categoryName}}" >{{incomeCategory.categoryName}}</option>
+					{% endfor %}
 				</select>
 			</div>
 			

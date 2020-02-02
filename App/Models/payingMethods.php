@@ -9,7 +9,7 @@ use PDO;
  *
  * PHP version 7.0
  */
-class payingMethods extends \Core\Model
+class PayingMethods extends \Core\Model
 {
 	
 	public static function setUserCategoriesAfterSingup($userId){
@@ -18,20 +18,37 @@ class payingMethods extends \Core\Model
 		
 		while(!feof($myfile)){
 			$category = chop(fgets($myfile));
-			$sql = 'INSERT INTO payingMethods (userId, payingMethod)
-                    VALUES (:userId, :categoryName)';
+			$sql = 'INSERT INTO payingmethods (userId, payingMethod)
+                    VALUES (:userId, :payingMethod)';
 					
 			$db = static::getDB();
             $stmt = $db->prepare($sql);
 		
 			$stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
-            $stmt->bindValue(':categoryName', $category, PDO::PARAM_STR);
+            $stmt->bindValue(':payingMethod', $category, PDO::PARAM_STR);
 			
 			$stmt->execute();
 		}
 		
 		fclose($myfile);
 	}
+	
+	
+	 public static function findByID($id)
+    {
+        $sql = 'SELECT * FROM payingmethods WHERE userId = :id';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+       $stmt->execute();
+		
+        return $stmt->fetchAll();
+		
+    }
 	
     public function save()
     {
@@ -57,4 +74,6 @@ class payingMethods extends \Core\Model
 
         return false;
     }
+	
+	
 }

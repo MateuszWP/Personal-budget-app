@@ -5,6 +5,8 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\Expense;
 use \App\Flash;
+use \App\Models\PayingMethods;
+use \App\Models\ExpenseCategory;
 
 /**
  * AddIncome controller
@@ -20,8 +22,14 @@ class AddExpense extends \Core\Controller
      * @return void
      */
     public function newAction()
-    {
-        View::renderTemplate('AddExpense/new.html');
+    {	
+		$payingMethods = new PayingMethods();
+		$payingMethods = PayingMethods::findByID($_SESSION['user_id']);
+		
+		$expenseCategories = new ExpenseCategory();
+		$expenseCategories = ExpenseCategory::findByID($_SESSION['user_id']);
+		
+        View::renderTemplate('AddExpense/new.html',array('payingMethods' =>$payingMethods, 'expenseCategories' =>$expenseCategories));
     }
 
 	/**

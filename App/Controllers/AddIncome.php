@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\Income;
 use \App\Flash;
+use \App\Models\IncomeCategory;
 /**
  * AddIncome controller
  *
@@ -20,7 +21,10 @@ class AddIncome extends \Core\Controller
      */
     public function newAction()
     {
-        View::renderTemplate('AddIncome/new.html');
+
+		$incomeCategories = new IncomeCategory();
+		$incomeCategories = IncomeCategory::findByID($_SESSION['user_id']);
+        View::renderTemplate('AddIncome/new.html',['incomeCategories'=> $incomeCategories]);
     }
 
 	/**

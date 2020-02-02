@@ -60,9 +60,9 @@
 				</div>
 				<select class="form-control" name="payingMethod">
 					<option value="" disabled  hidden>Metoda płatności </option>
-					<option value="Gotówka"  selected>Gotówka</option>
-					<option value="Karta debetowa" >Karta debetowa</option>
-					<option value="Karta kredytowa">Karta kredytowa</option>
+					{% for payingMethod in payingMethods %}
+						<option value="{{payingMethod.payingMethod}}" >{{payingMethod.payingMethod}}</option>
+					{% endfor %}
 				</select>
 			</div>
 				
@@ -72,21 +72,9 @@
 				</div>
 				<select class="form-control" name="category">
 					<option value="" disabled hidden>Wybierz kategorię</option>
-					<option value="Jedzenie" selected>Jedzenie</option>
-					<option value="Mieszkanie" >Mieszkanie</option>
-					<option value="Transport">Transport</option>
-					<option value="Telekomunikacja">Telekomunikacja</option>
-					<option value="Opieka zdrowotna">Opieka zdrowotna</option>
-					<option value="Dzieci">Dzieci</option>
-					<option value="Rozrywka">Rozrywka</option>
-					<option value="Wycieczka">Wycieczka</option>
-					<option value="Szkolenia">Szkolenia</option>
-					<option value="Książki">Książki</option>
-					<option value="Oszczędności">Oszczędności</option>
-					<option value="Na emeryturę">Na emeryturę</option>
-					<option value="Spłata długów">Spłata długów</option>
-					<option value="Darowizna">Darowizna</option>
-					<option value="Inne wydatki">Inne wydatki</option>	
+					{% for expenseCategory in expenseCategories %}
+					<option value="{{expenseCategory.categoryName}}" >{{expenseCategory.categoryName}}</option>
+					{% endfor %}
 				</select>
 			</div>
 			
