@@ -6,79 +6,67 @@
     <script src="/js/hideShowPassword.min.js"></script>
     <script  language="JavaScript" type="text/javascript">
       
-		$(document).ready(function() {
-			var selectedOption = $("#selectDate").children("option:selected").val();
-			if(selectedOption == 5)
-			{
-			$('#customDate').on('shown.bs.modal', function (e) {
-			  console.log('Modal is successfully shown!');
-			});
-				$modal = $('#customDate');
-				$modal.modal('show');
-				
-			}
-			if(selectedOption == "fail")
-			{
-				$modal = $('#customDate');
-				$modal.modal('show');
-			}
-			
-			var d = new Date();
-			var day = d.getDate();
-			var month = d.getMonth() +1;
-			var year = d.getFullYear();
-
-			if(day <=9) day='0'+day;
-			if(month <=9) month = '0' + month;
-
-			$('#date').val(year+"-"+month+"-"+day);
-			$('#date2').val(year+"-"+month+"-"+day);
-			
-		});
-		
-//		$(document).ready(function() {
-//			$("#submitModal").click(function() {
-//				$("#formModal").submit();
-//			});
-//		});
-		
 		$('#year').text(new Date().getFullYear());
 		
-		
+		// cheating but i had no idea how to reader proper info for first time
 		$(document).ready(function(){
-			$('select').on('change', function(){
-				var periodOfTime = $("#selectDate").val();
-				alert(periodOfTime);
-				$.post("/showBalance/decideAction", {
-					time: periodOfTime
+			$.post("/showBalance/decideAction", {
+					time: 2
 					}, function(data, status){
-						$('.tables').html(' ');
-						$('.tables').append(data);
-						//console.log(data);
+						$('.tables').html(data);
+						//$('.tables').append(data);
 				});
-				//alert(periodOfTime);
-			});
-		});
-		
-		/*
-		$(document).ready(function(){
+				
+			
+			
 			$('select').on('change', function(){
 				var periodOfTime = $("#selectDate").val();
-				alert(periodOfTime);
-				$.ajax({
-					url: "/showBalance/decideAction" ,
-					type: "GET",
-					data: {periodOfTime: periodOfTime},
-					success: function(result, status){
-						console.log(result);
-					},
-					error: function(){
-						alert("error");
-					},
-				}); 
+				if(periodOfTime != 5){
+					//alert(periodOfTime);
+					$.post("/showBalance/decideAction", {
+						time: periodOfTime
+						}, function(data, status){
+						$('.tables').html(data);
+						});
+				}
+				else if(periodOfTime == 5){
+					$('#customDate').on('shown.bs.modal', function (e) {
+						console.log('Modal is successfully shown!');
+					});
+					$modal = $('#customDate');
+					$modal.modal('show');
+				}
+				else if(periodOfTime== "fail")
+				{
+					$modal = $('#customDate');
+					$modal.modal('show');
+				}
+				var d = new Date();
+				var day = d.getDate();
+				var month = d.getMonth() +1;
+				var year = d.getFullYear();
+
+				if(day <=9) day='0'+day;
+				if(month <=9) month = '0' + month;
+
+				$('#date').val(year+"-"+month+"-"+day);
+				$('#date2').val(year+"-"+month+"-"+day);
+			});
+			
+		});
+		
+		$(document).ready(function() {
+			$("#submitModal").click(function(e) {
+				e.preventDefault();
+				var dateA = $("#date").val();
+				var dateB= $("#date2").val();
+				console.log(dateA);
+				$('.tables').load("/showBalance/showBalanceForPeriodOfTimeAction", {
+					date1: dateA,
+					date2: dateB
+				});
 			});
 		});
-		*/
     </script>
 	
 {% endblock %}
@@ -134,12 +122,9 @@
 				<label for="date">Do</label>
 				<input class="form-control" type="date" min="2000-01-01" name="date2" id="date2" required>
 			  </div>
-			  
+				<button type="submit" form="modalForm" class="btn btn-primary" data-dismiss="modal" id="submitModal" >Akceptuj</button>
+				
 			</form>
-		  </div>
-		  
-		  <div class="modal-footer">
-			<button type="submit" class="btn btn-primary" data-dismiss="modal" form="form" id="submitModal">Akceptuj</button>
 		  </div>
 		  
 		</div>
