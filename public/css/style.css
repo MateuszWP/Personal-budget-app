@@ -59,6 +59,24 @@ nav a:hover {
 	background-color: #f2be11;
 }
 
+.card{
+	margin-bottom: 3px;
+}
+
+.card a{
+	color: #333;
+}
+
+.card-body button{
+	margin-top: 10px;
+}
+
+@media (min-width: 991px) {
+	.card-body button{
+		width: 32.9%
+	}
+}
+
 @media (max-width: 991px) {
 	#expenses {
 		margin-top: 10px;

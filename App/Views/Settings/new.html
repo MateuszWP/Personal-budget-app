@@ -24,21 +24,20 @@
 			<h2 class="p-3 text-center">Ustawienia</h2>
 		</header>
 		
-		<form id="settingsForm" method="post">
-	
-			<!-- ACCORDION -->
-			<div id="accordion">
-			  <div class="card">
-				<a href="#personalInfo" data-parent="#accordion" data-toggle="collapse">
-					<div class="card-header">
-					  <h5>
-						 <i class="fas fa-address-card"></i> Dane użytkownika
-					  </h5>
-					</div>
-				</a>
-				
-				<div id="personalInfo" class="collapse">
-				  <div class="card-body">
+		<!-- ACCORDION -->
+		<div id="accordion">
+		  <div class="card">
+			<a href="#personalInfo" data-parent="#accordion" data-toggle="collapse">
+				<div class="card-header py-1">
+				  <h5>
+					 <i class="fas fa-address-card"></i> Dane użytkownika
+				  </h5>
+				</div>
+			</a>
+			
+			<div id="personalInfo" class="collapse">
+			  <div class="card-body">
+				<form id="personalInfoForm" method="post">
 					<div class="input-group form-group">
 						<div>
 							<span class="input-group-text"><strong><i class="fas fa-user"></i></strong></span>
@@ -60,98 +59,136 @@
 						<input id="inputPassword" class="form-control" type="password" placeholder="Hasło" name="password" data-toggle="inputPassword" />
 					</div>
 					
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Edytuj dane użytkownika 
+					<button type="submit" value="Submit" class="btn btn-success btn-inline-block" style="width: 100%">
+						Edytuj dane użytkownika 
 					</button>
-				  </div>
-				</div>
-			  </div>
-
-			  <div class="card">
-				<a href="#incomeCategory" data-parent="#accordion" data-toggle="collapse">
-					<div class="card-header">
-					  <h5>
-						 <i class="fas fa-tag"></i> Kategorie przychodów
-					  </h5>
-					</div>
-				</a>
-				
-				<div id="incomeCategory" class="collapse">
-				  <div class="card-body">
-					<div><label><input type="radio" name="incomeCategory"> Wynagrodzenie </label></div>
-					<div><label><input type="radio" name="incomeCategory"> Lokata </label></div>
-					<div><label><input type="radio" name="incomeCategory"> Wygrana</label></div>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Dodaj kategorię 
-					</button>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Edytuj kategorię 
-					</button>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Usuń kategorię
-					</button>
-				  </div>
-				</div>
-			  </div>
-
-			  <div class="card">
-				<a href="#expenseCategory" data-parent="#accordion" data-toggle="collapse">
-					<div class="card-header">
-					  <h5>
-						  <i class="fas fa-shopping-cart"></i> Kategorie wydatków
-					  </h5>
-					</div>
-				</a>
-				
-				<div id="expenseCategory" class="collapse">
-				  <div class="card-body">
-					<div><label><input type="radio" name="expenseCategory"> Ubrania </label></div>
-					<div><label><input type="radio" name="expenseCategory"> Jedzenie</label></div>
-					<div><label><input type="radio" name="expenseCategory"> Opłata za mieszkanie </label></div>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Dodaj kategorię 
-					</button>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Edytuj kategorię 
-					</button>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Usuń kategorię
-					</button>
-				  </div>
-				</div>
-			  </div>
-			  
-			  <div class="card">
-				<a href="#payingMethods" data-parent="#accordion" data-toggle="collapse">
-					<div class="card-header">
-					  <h5>
-						<i class="fas fa-receipt"></i>  Metody płatności
-					  </h5>
-					</div>
-				</a>
-				
-				<div id="payingMethods" class="collapse">
-				  <div class="card-body">
-					<div><label><input type="radio" name="payingMethods"> Gotówka </label></div>
-					<div><label><input type="radio" name="payingMethods"> Karta kredytowa </label></div>
-					<div><label><input type="radio" name="payingMethods"> Portfel online </label></div>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Dodaj metodę 
-					</button>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Edytuj metodę 
-					</button>
-					<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-						<i class="fas fa-plus"></i> Usuń metodę
-					</button>
-				  </div>
-				</div>
-				
+				</form>
 			  </div>
 			</div>
+		  </div>
+
+		  <div class="card">
+			<a href="#incomeCategory" data-parent="#accordion" data-toggle="collapse">
+				<div class="card-header py-1">
+				  <h5>
+					 <i class="fas fa-tag"></i> Kategorie przychodów
+				  </h5>
+				</div>
+			</a>
 			
-		
-		</form>
+			<div id="incomeCategory" class="collapse">
+			  <div class="card-body">
+				<form id="incomeCategoryForm" method="post">
+					<div class="option"><label><input type="radio" name="incomeCategory"> Wynagrodzenie </label></div>
+					<div class="option"><label><input type="radio" name="incomeCategory"> Lokata </label></div>
+					<div class="option"><label><input type="radio" name="incomeCategory"> Wygrana</label></div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<i class="fas fa-plus"></i> Dodaj kategorię 
+							</button>
+						</div>
+						
+						<div class="col-md-4">
+							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<i class="fas fa-plus"></i> Edytuj kategorię 
+							</button>
+						</div>
+						
+						<div class="col-md-4">
+							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<i class="fas fa-plus"></i> Usuń kategorię
+							</button>
+						</div>
+					</div>
+				</form>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="card">
+			<a href="#expenseCategory" data-parent="#accordion" data-toggle="collapse">
+				<div class="card-header py-1" >
+				  <h5>
+					  <i class="fas fa-shopping-cart"></i> Kategorie wydatków
+				  </h5>
+				</div>
+			</a>
+			
+			<div id="expenseCategory" class="collapse">
+			  <div class="card-body">
+				<form id="expenseCategoryForm" method="post">
+					<div class="option"><label><input type="radio" name="expenseCategory"> Ubrania </label></div>
+					<div class="option"><label><input type="radio" name="expenseCategory"> Jedzenie</label></div>
+					<div class="option"><label><input type="radio" name="expenseCategory"> Opłata za mieszkanie </label></div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<i class="fas fa-plus"></i> Dodaj kategorię 
+							</button>
+						</div>
+						
+						<div class="col-md-4">
+							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<i class="fas fa-plus"></i> Edytuj kategorię 
+							</button>
+						</div>
+						
+						<div class="col-md-4">
+							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<i class="fas fa-plus"></i> Usuń kategorię
+							</button>
+						</div>
+					</div>
+				</form>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="card">
+			<a href="#payingMethods" data-parent="#accordion" data-toggle="collapse">
+				<div class="card-header py-1 card-header-style">
+				  <h5>
+					<i class="fas fa-receipt"></i>  Metody płatności
+				  </h5>
+				</div>
+			</a>
+			
+			<div id="payingMethods" class="collapse">
+				<div class="card-body">
+					<form id="personalInfoForm" method="post">
+						<div class="option"><label><input type="radio" name="payingMethods"> Gotówka </label></div>
+						<div class="option"><label><input type="radio" name="payingMethods"> Karta kredytowa </label></div>
+						<div class="option"><label><input type="radio" name="payingMethods"> Portfel online </label></div>
+						
+						<div class="row">
+							<div class="col-md-4">
+								<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+									<i class="fas fa-plus"></i> Dodaj metodę 
+								</button>
+							</div>
+							
+							<div class="col-md-4">
+								<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+									<i class="fas fa-plus"></i> Edytuj metodę 
+								</button>
+							</div>
+							
+							<div class="col-md-4">
+								<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+									<i class="fas fa-plus"></i> Usuń metodę 
+								</button>
+							</div>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+			
+		  </div>
+		</div>
 	</div>
 	
 	

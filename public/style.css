@@ -13,10 +13,6 @@
     background-color: #fcf8e3;
 }
 
-.errors{
-	text-align: center;
-}
-
 body{
 	background-color: #ddd;
 }
@@ -63,31 +59,38 @@ nav a:hover {
 	background-color: #f2be11;
 }
 
+.card{
+	margin-bottom: 3px;
+}
+
+.card a{
+	color: #333;
+}
+
+.card-body button{
+	margin-top: 10px;
+}
+
+.option{
+	background-color: #ddd;
+	padding-left: 5px;
+	margin-bottom: 2px;
+}
+
+.card-body button{
+		width: 100%;
+	}
+/*
+@media (min-width: 991px) {
+	.card-body button{
+		width: 32.9%
+	}
+}
+*/
 @media (max-width: 991px) {
 	#expenses {
 		margin-top: 10px;
 	}
-}
-
-
-.hideShowPassword-toggle {
-	background: transparent;
-	border: 0;
-	border-radius: 0.25em;
-	color: #888;
-	cursor: pointer;
-	font-size: 0.75em;
-	font-weight: bold;
-	margin-right: 0.5em;
-	padding: 0.5em;
-	text-transform: uppercase;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-}
-
-.hideShowPassword-toggle:hover,
-.hideShowPassword-toggle:focus {
-	background-color: #eee;
-	color: #555;
-	outline: transparent;
+	
+	
 }
