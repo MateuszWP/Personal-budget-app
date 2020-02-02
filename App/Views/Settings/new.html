@@ -79,9 +79,9 @@
 			<div id="incomeCategory" class="collapse">
 			  <div class="card-body">
 				<form id="incomeCategoryForm" method="post">
-					<div class="option"><label><input type="radio" name="incomeCategory"> Wynagrodzenie </label></div>
-					<div class="option"><label><input type="radio" name="incomeCategory"> Lokata </label></div>
-					<div class="option"><label><input type="radio" name="incomeCategory"> Wygrana</label></div>
+					{% for incomeCategory in incomeCategories %}
+						<div class="option"><label><input type="radio" name="{{incomeCategory.categoryName}}" >{{incomeCategory.categoryName}}</label></div>
+					{% endfor %}
 					
 					<div class="row">
 						<div class="col-md-4">
@@ -119,9 +119,9 @@
 			<div id="expenseCategory" class="collapse">
 			  <div class="card-body">
 				<form id="expenseCategoryForm" method="post">
-					<div class="option"><label><input type="radio" name="expenseCategory"> Ubrania </label></div>
-					<div class="option"><label><input type="radio" name="expenseCategory"> Jedzenie</label></div>
-					<div class="option"><label><input type="radio" name="expenseCategory"> Opłata za mieszkanie </label></div>
+					{% for expenseCategory in expenseCategories %}
+						<div class="option"><label><input type="radio" name="{{expenseCategory.categoryName}}" >{{expenseCategory.categoryName}}</label></div>
+					{% endfor %}
 					
 					<div class="row">
 						<div class="col-md-4">
@@ -159,9 +159,9 @@
 			<div id="payingMethods" class="collapse">
 				<div class="card-body">
 					<form id="personalInfoForm" method="post">
-						<div class="option"><label><input type="radio" name="payingMethods"> Gotówka </label></div>
-						<div class="option"><label><input type="radio" name="payingMethods"> Karta kredytowa </label></div>
-						<div class="option"><label><input type="radio" name="payingMethods"> Portfel online </label></div>
+						{% for payingMethod in payingMethods %}
+							<div class="option"><label><input type="radio" name="{{payingMethod.payingMethod}}" >{{payingMethod.payingMethod}}</label></div>
+						{% endfor %}
 						
 						<div class="row">
 							<div class="col-md-4">
