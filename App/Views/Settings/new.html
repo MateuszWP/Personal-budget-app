@@ -4,6 +4,8 @@
 
 {% block footer %}
 
+
+
 {% endblock %}
 
 {% block body %}
@@ -58,7 +60,7 @@
 						</div>
 						<input id="inputPassword" class="form-control" type="password" placeholder="Hasło" name="password" data-toggle="inputPassword" />
 					</div>
-					
+				
 					<button type="submit" value="Submit" class="btn btn-success btn-inline-block" style="width: 100%">
 						Edytuj dane użytkownika 
 					</button>
@@ -80,9 +82,9 @@
 			  <div class="card-body">
 				<form id="incomeCategoryForm" method="post">
 					{% for incomeCategory in incomeCategories %}
-						<div class="option"><label><input type="radio" name="{{incomeCategory.categoryName}}" >{{incomeCategory.categoryName}}</label></div>
+						<div class="option"><label><input type="radio" name="incomeCategory" > {{incomeCategory.categoryName}}</label></div>
 					{% endfor %}
-					
+				</form>
 					<div class="row">
 						<div class="col-md-4">
 							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
@@ -97,12 +99,12 @@
 						</div>
 						
 						<div class="col-md-4">
-							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+							<button class="btn btn-success btn-inline-block" data-toggle="modal" data-target="#modalDeleteCategory">
 								<i class="fas fa-plus"></i> Usuń kategorię
 							</button>
 						</div>
 					</div>
-				</form>
+				
 			  </div>
 			</div>
 		  </div>
@@ -120,9 +122,9 @@
 			  <div class="card-body">
 				<form id="expenseCategoryForm" method="post">
 					{% for expenseCategory in expenseCategories %}
-						<div class="option"><label><input type="radio" name="{{expenseCategory.categoryName}}" >{{expenseCategory.categoryName}}</label></div>
+						<div class="option"><label><input type="radio" name="expenseCategory" > {{expenseCategory.categoryName}}</label></div>
 					{% endfor %}
-					
+				</form>
 					<div class="row">
 						<div class="col-md-4">
 							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
@@ -137,12 +139,11 @@
 						</div>
 						
 						<div class="col-md-4">
-							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-								<i class="fas fa-plus"></i> Usuń kategorię
+							<button class="btn btn-success btn-inline-block" data-toggle="modal" data-target="#modalDeleteCategory">
+								<i class="fas fa-plus"></i> Usuń kategorię 
 							</button>
 						</div>
 					</div>
-				</form>
 			  </div>
 			</div>
 		  </div>
@@ -158,14 +159,14 @@
 			
 			<div id="payingMethods" class="collapse">
 				<div class="card-body">
-					<form id="personalInfoForm" method="post">
+					<form id="deletePayingMethodForm" method="post" action="/settings/deletePayingMethod">
 						{% for payingMethod in payingMethods %}
-							<div class="option"><label><input type="radio" name="{{payingMethod.payingMethod}}" >{{payingMethod.payingMethod}}</label></div>
+							<div class="option"><label><input type="radio" name="payingMethod" value="{{payingMethod.payingMethod}}"> {{payingMethod.payingMethod}}</label></div>
 						{% endfor %}
-						
+					</form>
 						<div class="row">
 							<div class="col-md-4">
-								<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<button class="btn btn-success btn-inline-block" data-toggle="modal" data-target="#modalAddCategory">
 									<i class="fas fa-plus"></i> Dodaj metodę 
 								</button>
 							</div>
@@ -177,19 +178,98 @@
 							</div>
 							
 							<div class="col-md-4">
-								<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
+								<button class="btn btn-success btn-inline-block" data-toggle="modal" data-target="#modalDeleteCategory">
 									<i class="fas fa-plus"></i> Usuń metodę 
 								</button>
 							</div>
 							
 						</div>
-					</form>
+					
 				</div>
 			</div>
 			
 		  </div>
 		</div>
+		
+		<!--MODAL  usun kategorie-->
+		<div class="modal" id="modalDeleteCategory">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+				<h5 class="modal-title">Na pewno chcesz usunąć wybraną kategorię/metodę?</h5>
+				
+				<button class="close" data-dismiss="modal">&times;</button>
+			  </div>
+			  
+			  <div class="modal-body">
+				<button type="submit" value="Submit1" form="deletePayingMethodForm" class="btn btn-primary" >Tak</button>
+				<button class="close" data-dismiss="modal">Nie</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+		
+		<!--MODAL  dodaj nowa kategorie-->
+		<div class="modal" id="modalAddCategory">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+				<h5 class="modal-title">Podaj nazwe nowej kategorii</h5>
+				
+				<button class="close" data-dismiss="modal">&times;</button>
+			  </div>
+			  
+			  <div class="modal-body">
+				<form id="addPayingMethodForm" method="post" action="/settings/addPayingMethod">
+					<div class="input-group form-group">
+						<div>
+							<span class="input-group-text"><strong><i class="fas fa-pen"></i></strong></span>
+						</div>
+						<input class="form-control" type="text" placeholder="Nazwa kategorii" name="category"/>
+					</div>
+				
+				</form>
+				
+				<button type="submit" value="Submit" form="addPayingMethodForm" class="btn btn-primary" >Akceptuje</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+		
+		
+		<!--MODAL  edytuj  kategorie-->
+		<div class="modal" id="modalEditCategory">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			
+			  <div class="modal-header">
+				<h5 class="modal-title">Podaj nową nazwe dla wybranej kategorii</h5>
+				
+				<button class="close" data-dismiss="modal">&times;</button>
+			  </div>
+			  
+			  <div class="modal-body">
+				<form id="editPayingMethodForm" method="post" action="/settings/editPayingMethod">
+					<div class="input-group form-group">
+						<div>
+							<span class="input-group-text"><strong><i class="fas fa-pen"></i></strong></span>
+						</div>
+						<input class="form-control" type="text" placeholder="Nazwa kategorii" name="category"/>
+					</div>
+				
+				</form>
+				
+				<button type="submit" value="Submit" form="editPayingMethodForm" class="btn btn-primary" >Akceptuje</button>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+		
 	</div>
-	
 	
 {% endblock %}

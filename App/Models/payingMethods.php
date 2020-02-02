@@ -50,6 +50,36 @@ class PayingMethods extends \Core\Model
 		
     }
 	
+	public static function deletePayingMethod($method){
+		$sql = 'DELETE FROM payingMethods WHERE userId = :userId AND payingMethod = :payingMethod';
+		
+		$db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':payingMethod', $method, PDO::PARAM_STR);
+		
+		return $stmt->execute();
+	}
+	
+	public static function addPayingMethod($method){
+		
+		if($method!=''){
+			$sql = 'INSERT INTO payingMethods (userId, payingMethod)
+                    VALUES (:userId, :payingMethod)';
+		
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':payingMethod', $method, PDO::PARAM_STR);
+			
+			return $stmt->execute();
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
     public function save()
     {
         $this->validate();
