@@ -56,16 +56,62 @@ class Settings extends \Core\Controller
 	
 	public function deletePayingMethodAction()
 	{
-		$method = $_POST['payingMethod'];
+		if(isset($_POST['payingMethod']))
+		{
+			$method = $_POST['payingMethod'];
 		
-		if(PayingMethods::deletePayingMethod($method)){
-			Flash::addMessage('Udało się usunąć wybraną metodę płatności');
+			if(PayingMethods::deletePayingMethod($method)){
+				Flash::addMessage('Udało się usunąć wybraną metodę płatności');
+			}
+			else {
+				Flash::addMessage('Nie udało się usunąć wybranej metody płatności, proszę ponowić próbę',Flash::WARNING);
+			}
 		}
-		else {
+		else{
 			Flash::addMessage('Nie udało się usunąć wybranej metody płatności, proszę ponowić próbę',Flash::WARNING);
-        }
+		}
+		
 		$this->newAction();
 	}
+	
+	public function deleteIncomeCategoryAction()
+	{
+		if(isset($_POST['incomeCategory']))
+		{
+			$method = $_POST['incomeCategory'];
+		
+			if(IncomeCategory::deleteIncomeCategory($method)){
+				Flash::addMessage('Udało się usunąć wybraną metodę płatności');
+			}
+			else {
+				Flash::addMessage('Nie udało się usunąć wybranej metody płatności, proszę ponowić próbę',Flash::WARNING);
+			}
+		}
+		else{
+			Flash::addMessage('Nie udało się usunąć wybranej metody płatności, proszę ponowić próbę',Flash::WARNING);
+		}
+		$this->newAction();
+	}
+	
+	public function deleteExpenseCategoryAction()
+	{
+		if(isset($_POST['expenseCategory']))
+		{
+			$method = $_POST['expenseCategory'];
+		
+			if(ExpenseCategory::deleteExpenseCategory($method)){
+				Flash::addMessage('Udało się usunąć wybraną metodę płatności');
+			}
+			else {
+				Flash::addMessage('Nie udało się usunąć wybranej metody płatności, proszę ponowić próbę',Flash::WARNING);
+			}
+		}
+		else{
+			Flash::addMessage('Nie udało się usunąć wybranej metody płatności, proszę ponowić próbę',Flash::WARNING);
+		}
+		$this->newAction();
+	}
+	
 	
 	public function addPayingMethodAction()
 	{
@@ -78,6 +124,21 @@ class Settings extends \Core\Controller
 			Flash::addMessage('Nie udało się dodac metody płatności, proszę ponowić próbę',Flash::WARNING);
         }
 		$this->newAction();
+	}
+	
+	public function editPayingMethodAction(){
+		
+		$newMethod = $_POST['category'];
+		$oldMethod = $_POST['EditPayingMethod'];
+		
+		if(PayingMethods::editPayingMethod($newMethod, $oldMethod)){
+			Flash::addMessage('Udało się z edytować metodę płatności');
+		}
+		else {
+			Flash::addMessage('Nie udało się z edytowac metody płatności, proszę ponowić próbę',Flash::WARNING);
+        }
+		$this->newAction();
+		
 	}
 	
 }

@@ -49,6 +49,17 @@ class IncomeCategory extends \Core\Model
 		
     }
 	
+	public static function deleteIncomeCategory($method){
+		$sql = 'DELETE FROM incomeCategories WHERE userId = :userId AND categoryName= :incomeCategory';
+
+		$db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':incomeCategory', $method, PDO::PARAM_STR);
+		
+		return $stmt->execute();
+	}
+	
     public function save()
     {
         $this->validate();

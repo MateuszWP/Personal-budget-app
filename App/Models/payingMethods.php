@@ -80,6 +80,29 @@ class PayingMethods extends \Core\Model
 		
 	}
 	
+	
+	public static function editPayingMethod($newMethod, $oldMethod){
+		
+		if($newMethod!=''){
+			
+			$sql = 'UPDATE payingMethods 
+						SET payingMethod = :newPayingMethod
+						WHERE payingMethod = :oldPayingMethod AND userId = :userId';
+		
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':newPayingMethod', $newMethod, PDO::PARAM_STR);
+			$stmt->bindValue(':oldPayingMethod', $oldMethod, PDO::PARAM_STR);
+			
+			return $stmt->execute();
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
     public function save()
     {
         $this->validate();
