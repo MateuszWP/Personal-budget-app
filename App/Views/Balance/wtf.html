@@ -52,9 +52,7 @@
 				$.post("/showBalance/decideAction", {
 					time: periodOfTime
 					}, function(data, status){
-						$('.tables').html(' ');
-						$('.tables').append(data);
-						//console.log(data);
+						console.log(data);
 				});
 				//alert(periodOfTime);
 			});
@@ -153,9 +151,8 @@
 			</header>
 		</div>
 		
-		<div class="tables">
+		<div class="row tables">
 		<!-- Przychody i wydatki dla poszzegolnych kategorii -->
-
 		</div>
 		
 		

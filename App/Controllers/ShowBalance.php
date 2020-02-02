@@ -5,6 +5,12 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\Balance;
 
+
+if(isset( $_POST['periodOfTime'] )) {
+     $myShowBalance = new showBalance();
+     $myShowBalance->decideAction();
+}
+
 /**
  * AddIncome controller
  *
@@ -20,30 +26,34 @@ class ShowBalance extends \Core\Controller
      */
     public function newAction()
     {
+        View::renderTemplate('/Balance/balance.html');
 		$this-> showBalance(2, date('Y'), date('m'));
-      //  View::renderTemplate('/Balance/balance.html');
     }
 
 	public function decideAction(){
-		
-		if($_POST['periodOfTime'] == 2){
+
+	//	if($_POST['time'] == 2)
+	//		echo View::renderTemplate('/Balance/balance.html', ['option' => 5]);
+	//	else echo $_POST['time'];
+
+		if($_POST['time'] == 2){
 			$this-> showBalance(2, date('Y'), date('m'));
 		}
-		else if($_POST['periodOfTime'] == 3){
+		else if($_POST['time'] == 3){
 			$this-> showBalance(3, date('Y'), date('m')-1);
 		}
-		else if($_POST['periodOfTime'] == 4){
+		else if($_POST['time'] == 4){
 			$this-> showBalance(4, date('Y'));
 		}
-		else if($_POST['periodOfTime'] == 5){
-			View::renderTemplate('/Balance/balance.html', ['option' => 5]);
+		else if($_POST['time'] == 5){
+			View::renderTemplate('/Balance/tables.html', ['option' => 5]);
 		}
 	}
 	
 	public function showBalance($option, $year, $month=''){
 		$balance = new Balance( );
 		$balance->setBalance($year, $month);
-		View::renderTemplate('/Balance/balance.html',
+		View::renderTemplate('/Balance/tables.html',
 			array('incomes' => $balance->getIncomes(), 'incomesCategory' => $balance->getIncomesCategory(), 'expensesCategory' =>$balance->getExpensesCategory(), 'expenses' => $balance->getExpenses(), 'saldoIncomes' => $balance->getIncomesAmount(), 'saldoExpenses' =>$balance->getExpensesAmount(), 'option' => $option)
 			);
 		

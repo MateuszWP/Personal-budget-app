@@ -1,0 +1,117 @@
+<!-- Przychody i wydatki dla poszzegolnych kategorii -->
+<div class="container">
+	<div class="row">
+			<div id="incomes" class="col-lg-6">
+				<h2 class="text-center py-2">Przychody w kategoriach <i class="fas fa-plus"></i></h2>
+				<table class="table table-success table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set number = 1 %}
+						{% for incomeCategory in incomesCategory %}
+							<tr>
+								<th scope="."row".">{{number}}</th>
+								<td>{{incomeCategory.sum}}</td>
+								<td>{{incomeCategory.category}}</td>
+							</tr>
+							{% set number = number +1 %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			
+			<div id="expenses" class="col-lg-6">
+				<h2 class="text-center py-2">Wydatki w kategoriach <i class="fas fa-minus"></i></h2>
+				<table class="table table-warning table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set number = 1 %}
+						{% for expenseCategory in expensesCategory %}
+							<tr>
+								<th scope="."row".">{{number}}</th>
+								<td>{{expenseCategory.sum}}</td>
+								<td>{{expenseCategory.category}}</td>
+							</tr>
+							{% set number = number +1 %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Przychody i wydatki all info -->
+			<div id="incomes" class="col-lg-6">
+				<h2 class="text-center py-2">Przychody <i class="fas fa-plus"></i></h2>
+				<table class="table table-success table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Data</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set number = 1 %}
+						{% for income in incomes %}
+							<tr>
+								<th scope="."row".">{{number}}</th>
+								<td>{{income.date}}</td>
+								<td>{{income.amount}}</td>
+								<td>{{income.category}}</td>
+							</tr>
+						{% set number = number +1 %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<div id="expenses" class="col-lg-6">
+				<h2 class="text-center py-2">Wydatki <i class="fas fa-minus"></i></h2>
+				<table class="table table-warning table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Data</th>
+							<th>Kwota</th>
+							<th>Kategoria</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set number = 1 %}
+						{% for expense in expenses %}
+							<tr>
+								<th scope="."row".">{{number}}</th>
+								<td>{{expense.date}}</td>
+								<td>{{expense.amount}}</td>
+								<td>{{expense.category}}</td>
+							</tr>
+						{% set number = number +1 %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+				
+			<div  class="col-lg-6">
+				<h3 class="text-center py-2" >Suma przychodów: {% for saldoIncome in saldoIncomes %} {{saldoIncome.sum}} {% endfor %}
+					 
+				</h3>
+			</div>
+			
+			<div  class="col-lg-6">
+				<h3 class="text-center py-2" >Suma wydatków: {% for saldoExpense in saldoExpenses %} {{saldoExpense.sum}} {% endfor %}
+					 
+				</h3>
+			</div>
+		</div>
+</div>
