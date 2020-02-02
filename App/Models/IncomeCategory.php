@@ -79,6 +79,28 @@ class IncomeCategory extends \Core\Model
 		
 	}
 	
+	public static function editIncomeCategory($newCategory, $oldCategory){
+		
+		if($newCategory!=''){
+			
+			$sql = 'UPDATE incomeCategories 
+						SET categoryName = :newIncomeCategory
+						WHERE categoryName = :oldIncomeCategory AND userId = :userId';
+		
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':newIncomeCategory', $newCategory, PDO::PARAM_STR);
+			$stmt->bindValue(':oldIncomeCategory', $oldCategory, PDO::PARAM_STR);
+			
+			return $stmt->execute();
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
     public function save()
     {
         $this->validate();

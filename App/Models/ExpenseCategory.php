@@ -79,6 +79,28 @@ class ExpenseCategory extends \Core\Model
 		}
 	}
 	
+	public static function editExpenseCategory($newCategory, $oldCategory, $limitAmount=0){
+		
+		if($newCategory!=''){
+			
+			$sql = 'UPDATE expenseCategories 
+						SET categoryName = :newExpenseCategory, limitAmount = :limitAmount
+						WHERE categoryName = :oldExpenseCategory AND userId = :userId';
+		
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':newExpenseCategory', $newCategory, PDO::PARAM_STR);
+			$stmt->bindValue(':limitAmount', $limitAmount, PDO::PARAM_STR);
+			$stmt->bindValue(':oldExpenseCategory', $oldCategory, PDO::PARAM_STR);
+			
+			return $stmt->execute();
+		}
+		else{
+			return false;
+		}
+	}
+	
     public function save()
     {
         $this->validate();
