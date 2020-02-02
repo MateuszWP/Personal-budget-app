@@ -60,6 +60,25 @@ class IncomeCategory extends \Core\Model
 		return $stmt->execute();
 	}
 	
+	public static function addIncomeCategory($method){
+		
+		if($method!=''){
+			$sql = 'INSERT INTO incomeCategories (userId, categoryName)
+                    VALUES (:userId, :categoryName)';
+		
+			$db = static::getDB();
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+			$stmt->bindValue(':categoryName', $method, PDO::PARAM_STR);
+			
+			return $stmt->execute();
+		}
+		else{
+			return false;
+		}
+		
+	}
+	
     public function save()
     {
         $this->validate();

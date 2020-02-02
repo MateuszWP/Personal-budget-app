@@ -21,6 +21,23 @@
 			//alert(this.name);
 		});
 		
+		$('.deleteCategory').click(function () {
+			var formName = this.name;
+			alert(formName);
+			$('#deleteCategoryButton' ).attr('form', formName);
+ 
+			//alert(this.name);
+		});
+		
+		$('.addCategory').click(function () {
+			var formID = this.name;
+			//alert(formID);
+			$('#addCategoryButton' ).attr('form', formID);
+			$('.addForm').attr('id', formID);
+			$('.addForm').attr('action', '/settings/'+ formID);
+ 
+		});
+		
 	});
 	
 	
@@ -110,14 +127,14 @@
 				
 				<div class="row">
 					<div class="col-md-4">
-						<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-							<i class="fas fa-plus"></i> Dodaj kategorię 
-						</button>
+						<button class="btn btn-success btn-inline-block addCategory" data-toggle="modal" data-target="#modalAddCategory" name="addIncomeCategory">
+								<i class="fas fa-plus"></i> Dodaj kategorię 
+							</button>
 					</div>
 					
 					<div class="col-md-4">
-						<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-							<i class="fas fa-plus"></i> Edytuj kategorię 
+						<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" name="editIncomeCategory">
+							<i class="fas fa-plus"></i> Edytuj metodę 
 						</button>
 					</div>
 					
@@ -150,14 +167,14 @@
 				</form>
 					<div class="row">
 						<div class="col-md-4">
-							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-								<i class="fas fa-plus"></i> Dodaj kategorię 
+							<button class="btn btn-success btn-inline-block addCategory" data-toggle="modal" data-target="#modalAddCategory" name="addExpenseCategory">
+								<i class="fas fa-plus"></i> Dodaj Kategorię
 							</button>
 						</div>
 						
 						<div class="col-md-4">
-							<button type="submit" value="Submit" class="btn btn-success btn-inline-block">
-								<i class="fas fa-plus"></i> Edytuj kategorię 
+							<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" name="editExpenseCategory">
+								<i class="fas fa-plus"></i> Edytuj metodę 
 							</button>
 						</div>
 						
@@ -191,13 +208,13 @@
 					
 					<div class="row">
 						<div class="col-md-4">
-							<button class="btn btn-success btn-inline-block" data-toggle="modal" data-target="#modalAddCategory">
+							<button class="btn btn-success btn-inline-block addCategory" data-toggle="modal" data-target="#modalAddCategory" name="addPayingMethod">
 								<i class="fas fa-plus"></i> Dodaj metodę 
 							</button>
 						</div>
 						
 						<div class="col-md-4">
-							<button class="btn btn-success btn-inline-block" data-toggle="modal" data-target="#modalEditCategory" id="editPayingMethodButton">
+							<button class="btn btn-success btn-inline-block editCategory" data-toggle="modal" data-target="#modalEditCategory" id="editPayingMethodButton" name="editPayingMethod">
 								<i class="fas fa-plus"></i> Edytuj metodę 
 							</button>
 						</div>
@@ -247,7 +264,7 @@
 			  </div>
 			  
 			  <div class="modal-body">
-				<form id="addPayingMethodForm" method="post" action="/settings/addPayingMethod">
+				<form  class="addForm" method="post">
 					<div class="input-group form-group">
 						<div>
 							<span class="input-group-text"><strong><i class="fas fa-pen"></i></strong></span>
@@ -257,13 +274,12 @@
 				
 				</form>
 				
-				<button type="submit" value="Submit" form="addPayingMethodForm" class="btn btn-primary" >Akceptuje</button>
+				<button id="addCategoryButton" type="submit" value="Submit"  class="btn btn-primary" >Akceptuje</button>
 			  </div>
 			  
 			</div>
 		  </div>
 		</div>
-		
 		
 		<!--MODAL  edytuj  kategorie-->
 		<div class="modal" id="modalEditCategory">
