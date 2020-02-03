@@ -56,14 +56,24 @@ class AddExpense extends \Core\Controller
 			$amountToAdd = $_POST['amount'];
 			$limit = ExpenseCategory::getLimitForCategory($category);
 			$amountInMonthForCategory = Expense::getAmountInMonthForCategory($category);
+			
 			if(empty($amountInMonthForCategory[0])){
 				$amountInMonthForCategory[0]=0;
 			}
+			
 			if($limit[0] != 0){
+				if($amountInMonthForCategory[0] + $amountToAdd >= $limit[0] ){
+					$limitClass = "limitBad";
+				}
+				else{
+					$limitClass = "limitGood";
+				}
+				
 				View::renderTemplate('/AddExpense/limit.html', [
 					'limit' => $limit[0],
 					'amountInMonthForCategory' => $amountInMonthForCategory[0],
-					'amountToAdd' => $amountToAdd
+					'amountToAdd' => $amountToAdd,
+					'limitClass' => $limitClass
 				]);
 			}
 		}
