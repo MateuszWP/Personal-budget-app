@@ -98,7 +98,6 @@ class IncomeCategory extends \Core\Model
 		else{
 			return false;
 		}
-		
 	}
 	
     public function save()

@@ -6,15 +6,22 @@
     <script src="/js/hideShowPassword.min.js"></script>
 
     <script>
-            /**
-              * Show password toggle button
-              */
-            $('#inputPassword').hideShowPassword({
-                show: false,
-                innerToggle: 'focus'
-            });
-        });
+		$(document).ready(function(){
+			$('#inputValue, #categories').on('change', function(){
+				var checkedCategory = $("#categories").val();
+				var expenseAmount = $('#inputValue').val();
+				$('#limit').load("/addExpense/checkLimit",{
+						category: checkedCategory,
+						amount: expenseAmount
+					}, function(){
+						//alert("cos sie dzieje");
+					}
+				);
+			});
+		});
     </script>
+
+
 
 
 {% endblock %}
@@ -32,10 +39,18 @@
 	</div>
     {% endif %}
 	
+	<div id="limit">
+		
+	</div>
+	
+	
+	<div class ="row">
 	<div class="col-md-4 offset-md-4  col-8 offset-2  text-center mt-5" id="logowanie">
 		<header>
 			<h2 class="p-3">Nowy wydatek</h2>
 		</header>
+		
+		
 		
 		<form id="formAddExpense" action="/addExpense/create" method="post">
 	
@@ -70,10 +85,14 @@
 				<div>
 					<span class="input-group-text"><strong><i class="fas fa-tag"></i></strong></span>
 				</div>
-				<select class="form-control" name="category">
+				<select class="form-control" name="category" id="categories">
 					<option value="" disabled hidden>Wybierz kategorię</option>
 					{% for expenseCategory in expenseCategories %}
-					<option value="{{expenseCategory.categoryName}}" >{{expenseCategory.categoryName}}</option>
+						<option value="{{expenseCategory.categoryName}}" >{{expenseCategory.categoryName}} 
+							{% if expenseCategory.limitAmount != 0 %}
+								 -> Limit: {{expenseCategory.limitAmount}}
+							{% endif %}
+						</option>
 					{% endfor %}
 				</select>
 			</div>
@@ -105,6 +124,6 @@
 		
 		</form>
 	</div>
-	
+	</div>
 	
 {% endblock %}

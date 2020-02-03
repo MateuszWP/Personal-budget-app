@@ -1,0 +1,33 @@
+<!-- LIMIT -->
+
+	<div class="row"> 
+		
+		<div class="col-md-3">
+			<b/>Limit:<b/>
+			</br>
+			<p>{{ limit|number_format(2) }}<p>
+		</div>
+		
+		<div class="col-md-3">
+			<b>W tym miesiącu wydano:</b>
+			</br>
+			<p>{{ amountInMonthForCategory|number_format(2)}}</p>
+		</div>
+		
+		<div class="col-md-3">
+			<b>Różnica:</b>
+			</br>
+			<p>{{ (limit - amountInMonthForCategory)|number_format(2) }}</p>
+		</div>
+		
+		<div class="col-md-3">
+			<b>Wydatki + wpisana kwota:</b>
+			</br>
+			<p>{{ (amountInMonthForCategory + amountToAdd)|number_format(2) }}</p>
+		</div>
+	</div>
+
+
+<script>
+
+</script>
