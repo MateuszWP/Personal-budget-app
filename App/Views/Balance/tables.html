@@ -16,7 +16,7 @@
 						{% for incomeCategory in incomesCategory %}
 							<tr>
 								<th scope="."row".">{{number}}</th>
-								<td>{{incomeCategory.sum}}</td>
+								<td>{{(incomeCategory.sum)|number_format(2)}}</td>
 								<td>{{incomeCategory.category}}</td>
 							</tr>
 							{% set number = number +1 %}
@@ -40,7 +40,7 @@
 						{% for expenseCategory in expensesCategory %}
 							<tr>
 								<th scope="."row".">{{number}}</th>
-								<td>{{expenseCategory.sum}}</td>
+								<td>{{expenseCategory.sum|number_format(2)}}</td>
 								<td>{{expenseCategory.category}}</td>
 							</tr>
 							{% set number = number +1 %}
@@ -67,7 +67,7 @@
 							<tr>
 								<th scope="."row".">{{number}}</th>
 								<td>{{income.date}}</td>
-								<td>{{income.amount}}</td>
+								<td>{{income.amount|number_format(2)}}</td>
 								<td>{{income.category}}</td>
 							</tr>
 						{% set number = number +1 %}
@@ -93,7 +93,7 @@
 							<tr>
 								<th scope="."row".">{{number}}</th>
 								<td>{{expense.date}}</td>
-								<td>{{expense.amount}}</td>
+								<td>{{expense.amount|number_format(2)}}</td>
 								<td>{{expense.category}}</td>
 							</tr>
 						{% set number = number +1 %}
