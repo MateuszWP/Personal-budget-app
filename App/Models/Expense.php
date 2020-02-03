@@ -173,4 +173,24 @@ class Expense extends \Core\Model
 			return $stmt->fetchAll();
     }
 	
+	public static function getAmountInMonthForCategory($category){
+		$month = date('m');
+		$year = date('Y');
+		
+		$sql = 'SELECT SUM(amount) as sum FROM expenses WHERE userId = :userId && month(date) = :month && year(date) = :year && category = :category';
+		
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':month', $month, PDO::PARAM_STR);
+        $stmt->bindValue(':year', $year, PDO::PARAM_STR);
+        $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+
+        //$stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+		return $stmt->fetch();
+	}
+	
 }

@@ -47,9 +47,26 @@ class AddExpense extends \Core\Controller
 		}else{
 			Flash::addMessage('Nie udało sie dodać wydatku', Flash::WARNING);
 			View::renderTemplate('AddExpense/new.html',array('payingMethods' =>PayingMethods::findByID($_SESSION['user_id']), 'expenseCategories' =>ExpenseCategory::findByID($_SESSION['user_id']),'expense' => $expense));
-
 		}
-		 
     }
+	
+	public function checkLimitAction(){
+		if(isset($_POST['category'])){
+			$category = $_POST['category'];
+			$amountToAdd = $_POST['amount'];
+			$limit = ExpenseCategory::getLimitForCategory($category);
+			$amountInMonthForCategory = Expense::getAmountInMonthForCategory($category);
+			if(empty($amountInMonthForCategory[0])){
+				$amountInMonthForCategory[0]=0;
+			}
+			if($limit[0] != 0){
+				View::renderTemplate('/AddExpense/limit.html', [
+					'limit' => $limit[0],
+					'amountInMonthForCategory' => $amountInMonthForCategory[0],
+					'amountToAdd' => $amountToAdd
+				]);
+			}
+		}
+	}
 	
 }

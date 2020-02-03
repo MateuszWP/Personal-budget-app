@@ -101,6 +101,21 @@ class ExpenseCategory extends \Core\Model
 		}
 	}
 	
+	public static function getLimitForCategory($category){
+		$sql = 'SELECT limitAmount FROM expenseCategories WHERE userId = :id AND categoryName = :category';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+
+        //$stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+		
+		return $stmt->fetch();
+	}
+		
     public function save()
     {
         $this->validate();

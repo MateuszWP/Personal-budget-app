@@ -90,7 +90,9 @@ nav a:hover {
 @media (max-width: 991px) {
 	#expenses {
 		margin-top: 10px;
-	}
-	
-	
+	}	
+}
+
+#limit{
+	background-color: green;
 }
