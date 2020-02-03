@@ -93,8 +93,14 @@ nav a:hover {
 	}	
 }
 
-.limit{
+.limitGood{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-color: #32CD32;
+}
+
+.limitBad{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #DC143C;
 }
